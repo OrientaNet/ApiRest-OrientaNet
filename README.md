@@ -1,76 +1,95 @@
-# ApiRest---OrientaNet
-Introducción
 
-OrientaNet es una plataforma web diseñada para brindar orientación vocacional a estudiantes de secundaria y universitarios, facilitando la conexión con expertos en diversas áreas profesionales y proporcionando herramientas para explorar diferentes carreras. Los usuarios pueden crear una cuenta, iniciar sesión y acceder a evaluaciones vocacionales personalizadas, así como recibir asesoría directa de expertos. La plataforma permite a los administradores realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre pruebas vocacionales, estudiantes, expertos y recursos educativos, gestionando de manera eficiente la información. Los estudiantes también pueden organizar su progreso a través de un sistema de suscripción mensual que incluye acceso a todas las herramientas y servicios.
+# OrientaNet
 
-El propósito de OrientaNet es ofrecer una plataforma integral que combine evaluaciones vocacionales, conexión con expertos, y acceso a recursos educativos, todo en un entorno seguro y amigable.
+**OrientaNet** es una plataforma web diseñada para proporcionar orientación vocacional a estudiantes de secundaria y universitarios. La plataforma ofrece pruebas de orientación vocacional, conexión con expertos en diversas áreas profesionales y acceso a recursos educativos personalizados. Los estudiantes pueden gestionar su perfil, realizar pruebas vocacionales, obtener recomendaciones de carrera y agendar sesiones de asesoría con expertos.
 
-Colaboradores del Proyecto
-Nombre	Rol	Perfil
-[Talledo Machado Luis]	Líder del Proyecto	LinkedIn
+## Módulos de la Aplicación
 
-Revisa el Progreso del Proyecto OrientaNet
-Columna	Descripción
-Backlog	Contiene todas las historias de usuario, tareas y características que deben desarrollarse. Es el listado de todo el trabajo pendiente.
-En Progreso	Incluye las tareas que están actualmente en desarrollo. Visualiza el trabajo en curso para asegurar el flujo continuo de trabajo.
-Revisión	Después de completar una tarea, se mueve aquí para una revisión de código y revisión por pares (peer review). Esta fase incluye la creación de pull requests para asegurar que el código cumpla con los estándares de calidad antes de integrarse al proyecto principal.
-En Pruebas	Contiene las tareas que han pasado la revisión de código y necesitan pruebas exhaustivas (unitarias, de integración y de aceptación) para garantizar su calidad.
-Hecho	Las tareas completamente desarrolladas, revisadas y probadas se mueven aquí, indicando que están listas y finalizadas.
+### 1. Módulo de Gestión de Usuarios
 
-Mira cómo va avanzando nuestro trabajo visitando el siguiente enlace: [Tablero de Trello].
+| Funcionalidad               | Descripción                                                                                                                                  |
+|-----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------|
+| Registro de Usuarios         | Permite a los estudiantes registrarse en la plataforma y crear una cuenta personal.                                                          |
+| Gestión de Perfiles          | Los usuarios pueden editar su perfil y almacenar información como datos personales, intereses y resultados de pruebas vocacionales.          |
 
-Funcionalidades de la Aplicación OrientaNet
+### 2. Módulo de Evaluación Vocacional
 
-Módulo de Gestión de Usuarios
+| Funcionalidad                | Descripción                                                                                                                                 |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| Realización de Pruebas        | Los estudiantes podrán completar pruebas vocacionales que evalúan sus habilidades, intereses y valores.                                     |
+| Resultados Personalizados     | Los informes generados a partir de las pruebas ofrecen recomendaciones de carreras y sugerencias para estudios adicionales.                 |
 
-    Creación de Usuarios e Inicio de Sesión:
-        Permitir a los usuarios registrarse en la plataforma.
-        Facilitar el inicio de sesión para acceder a su cuenta personal.
-        Mantener la seguridad de las credenciales de los usuarios.
+### 3. Módulo de Conexión con Expertos
 
-Módulo de Suscripciones
+| Funcionalidad                | Descripción                                                                                                                                 |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| Búsqueda de Mentores          | Los estudiantes podrán buscar mentores y expertos en diversas áreas profesionales para recibir asesoramiento.                               |
+| Sesiones de Asesoría          | Los estudiantes pueden agendar sesiones de asesoría personalizadas con expertos para discutir opciones de carrera y planes de estudio.      |
+| Beneficios para Expertos      | Los expertos pueden ganar visibilidad y construir una red profesional, además de recibir compensación económica por asesorías pagadas.      |
 
-    Suscripción Mensual:
-        Sistema de pagos recurrentes para acceder a todas las funcionalidades de la plataforma.
-        Proceso seguro de pagos y renovación automática.
+### 4. Módulo de Recursos Educativos
 
-Módulo de Evaluación Vocacional
+| Funcionalidad                | Descripción                                                                                                                                 |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| Acceso a Contenido            | Los estudiantes tienen acceso a una variedad de recursos educativos, incluyendo artículos, videos y guías sobre diferentes campos profesionales. |
+| Recomendaciones Personalizadas| Los recursos educativos son recomendados en función de los resultados de las pruebas vocacionales y los intereses del estudiante.            |
 
-    Pruebas Vocacionales:
-        Acceso a diferentes pruebas vocacionales basadas en habilidades, intereses y valores.
-        Procesamiento de los resultados y generación de recomendaciones de carrera.
-        Guardar el historial de pruebas y resultados para cada usuario.
+### 5. Módulo de Pagos en Línea
 
-Módulo de Conexión con Expertos
+| Funcionalidad                | Descripción                                                                                                                                 |
+|------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| Compra de Servicios de Asesoría | Los estudiantes pueden pagar por sesiones de asesoría personalizadas con expertos o por el acceso a recursos educativos exclusivos.          |
+| Sistema de Pagos Seguros      | Integración con plataformas de pago en línea para procesar las transacciones de manera segura.                                               |
 
-    Asesoría Personalizada:
-        Programar sesiones de asesoría con expertos en diversas áreas profesionales.
-        Gestión de temas y agenda para las sesiones de orientación vocacional.
-        Acceso a información detallada de los expertos (experiencia, especialización, certificaciones).
+## Instalación
 
-Módulo de Gestión de Contenido
+Para ejecutar este proyecto en tu entorno local, sigue los pasos a continuación:
 
-    Recursos Educativos:
-        Añadir nuevos recursos educativos a la plataforma.
-        Editar y eliminar recursos existentes.
-        Listar todos los recursos disponibles para los estudiantes.
+1. Clona este repositorio:
+   \`\`\`bash
+   git clone https://github.com/tu-usuario/orientanet.git
+   \`\`\`
 
-Módulo de Biblioteca Personal
+2. Instala las dependencias necesarias:
+   \`\`\`bash
+   npm install
+   \`\`\`
 
-    Gestión de Evaluaciones y Asesorías:
-        Permitir a los usuarios organizar y revisar los resultados de sus evaluaciones vocacionales.
-        Facilitar el acceso al historial de asesorías recibidas y recursos educativos consultados.
+3. Configura la base de datos en el archivo `.env` con las credenciales correspondientes.
 
-Módulo de Reportes
+4. Ejecuta la aplicación:
+   \`\`\`bash
+   npm start
+   \`\`\`
 
-    Reportes de Actividad:
-        Generar reportes de pruebas realizadas y asesorías programadas.
-        Mostrar estadísticas de uso, como pruebas más realizadas o carreras más recomendadas.
-        Proveer información detallada sobre la actividad de los estudiantes y los expertos.
+## Tecnologías Utilizadas
 
-Diagramas de la Aplicación
+| Tecnología         | Descripción                                                                                   |
+|--------------------|-----------------------------------------------------------------------------------------------|
+| **Frontend**        | Angular, HTML5, CSS3, TypeScript                                                              |
+| **Backend**         | Spring Boot, Java, JPA, REST API                                                              |
+| **Base de Datos**   | MySQL                                                                                         |
+| **Autenticación**   | JWT (JSON Web Tokens)                                                                         |
+| **Pagos en Línea**  | Integración con pasarelas de pago (por ejemplo, Stripe o PayPal)                               |
 
-Para entender mejor la estructura y diseño de la aplicación "OrientaNet", revisa los siguientes diagramas:
+## Contribuidores
 
-    Diagrama de Clases
-    Diagrama de Base de Datos
+| Nombre                         | Rol               | Perfil   |
+|---------------------------------|-------------------|----------|
+| [Talledo Machado Luis]                     | Líder del Proyecto | [LinkedIn](https://linkedin.com/in/tu-perfil) |
+
+## Progreso del Proyecto
+
+| Columna      | Descripción                                                                                         |
+|--------------|-----------------------------------------------------------------------------------------------------|
+| Backlog      | Contiene todas las historias de usuario, tareas y características que deben desarrollarse.           |
+| En Progreso  | Incluye las tareas que están actualmente en desarrollo.                                              |
+| Revisión     | Las tareas completadas pasan aquí para revisión de código y revisión por pares.                      |
+| En Pruebas   | Contiene las tareas que han pasado la revisión de código y necesitan pruebas exhaustivas.            |
+| Hecho        | Las tareas completamente desarrolladas, revisadas y probadas.                                        |
+
+Puedes ver el tablero del proyecto aquí: [Tablero de Trello](https://trello.com).
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para obtener más información.
