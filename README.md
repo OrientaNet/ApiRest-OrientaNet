@@ -7,7 +7,7 @@ El propósito de OrientaNet es ofrecer una plataforma integral que combine evalu
 
 Colaboradores del Proyecto
 Nombre	Rol	Perfil
-Talledo Machado Luis	Líder del Proyecto	LinkedIn
+[Talledo Machado Luis]	Líder del Proyecto	LinkedIn
 
 Revisa el Progreso del Proyecto OrientaNet
 Columna	Descripción
