@@ -46,21 +46,15 @@
 Para ejecutar este proyecto en tu entorno local, sigue los pasos a continuación:
 
 1. Clona este repositorio:
-   \`\`\`bash
-   git clone https://github.com/tu-usuario/orientanet.git
-   \`\`\`
+   `git clone https://github.com/tu-usuario/orientanet.git`
 
 2. Instala las dependencias necesarias:
-   \`\`\`bash
-   npm install
-   \`\`\`
+   `npm install`
 
 3. Configura la base de datos en el archivo `.env` con las credenciales correspondientes.
 
 4. Ejecuta la aplicación:
-   \`\`\`bash
-   npm start
-   \`\`\`
+   `npm start`
 
 ## Tecnologías Utilizadas
 
