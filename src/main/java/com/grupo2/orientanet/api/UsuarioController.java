@@ -15,30 +15,5 @@ import java.util.Optional;
 
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioService usuarioService;
-
-    @PostMapping("/registrar")
-    public ResponseEntity<Usuario> registrarUsuario(@RequestBody Usuario usuario) {
-        Usuario nuevoUsuario = usuarioService.registrarUsuario(usuario);
-        return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
-    }
-
-
-    @GetMapping
-    public ResponseEntity<List<Usuario>> obtenerTodosLosUsuarios() {
-        List<Usuario> usuarios = usuarioService.obtenerTodosLosUsuarios();
-        return new ResponseEntity<>(usuarios, HttpStatus.OK);
-    }
-
-
-    @GetMapping("/{email}")
-    public ResponseEntity<Usuario> obtenerUsuarioPorEmail(@PathVariable String email) {
-        Optional<Usuario> usuario = usuarioService.obtenerUsuarioPorEmail(email);
-        return usuario.map(ResponseEntity::ok)
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-
-
 
 }
