@@ -1,6 +1,8 @@
 package com.grupo2.orientanet.model.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,12 +17,17 @@ public class Respuesta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "descripcion", columnDefinition = "TEXT")
+    @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "descripcion", columnDefinition = "TEXT", nullable = false)
     private String descripcion;
 
-    @Column(name = "valor")
-    private int valor; // 1 para sistemas, 2 para medicina
+    // Relación con Carrera
+    @ManyToOne
+    @JoinColumn(name = "carrera_id", referencedColumnName = "id")
+    private Carrera carrera; // Asociación con Carrera
 
+    // Relación con Pregunta
     @ManyToOne
     @JoinColumn(name = "pregunta_id", referencedColumnName = "id")
     private Pregunta pregunta;
