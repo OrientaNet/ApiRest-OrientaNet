@@ -1,6 +1,10 @@
 package com.grupo2.orientanet.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,13 +19,24 @@ public class Respuesta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "descripcion", columnDefinition = "TEXT")
+    @NotNull
+    @Size(min = 1, max = 500)
+    @Column(name = "descripcion", columnDefinition = "TEXT", nullable = false)
     private String descripcion;
 
-    @Column(name = "valor")
-    private int valor; // 1 para sistemas, 2 para medicina
 
+
+    // Relación con Pregunta
     @ManyToOne
     @JoinColumn(name = "pregunta_id", referencedColumnName = "id")
+    @JsonBackReference
     private Pregunta pregunta;
+
+
+    // Relación con Carrera
+    @ManyToOne
+    @JoinColumn(name = "carrera_id", referencedColumnName = "id")
+    private Carrera carrera; // Asociación con Carrera
+
+
 }

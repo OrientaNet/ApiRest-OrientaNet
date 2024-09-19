@@ -7,11 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 @Service
 public class PreguntaServiceImpl implements PreguntaService {
     @Autowired
     private PreguntaRepository preguntaRepository;
+
+    @Override
+    public Pregunta crearPregunta(Pregunta pregunta) {
+        return preguntaRepository.save(pregunta);
+    }
 
     @Override
     public List<Pregunta> listarPreguntas() {
@@ -19,17 +24,21 @@ public class PreguntaServiceImpl implements PreguntaService {
     }
 
     @Override
-    public Optional<Pregunta> obtenerPreguntaPorId(Long id) {
-        return preguntaRepository.findById(id);
+    public Pregunta obtenerPreguntaPorId(Long id) {
+        return preguntaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pregunta no encontrada"));
     }
 
     @Override
-    public Pregunta guardarPregunta(Pregunta pregunta) {
-        return preguntaRepository.save(pregunta);
+    public Pregunta actualizarPregunta(Long id, Pregunta pregunta) {
+        Pregunta preguntaExistente = obtenerPreguntaPorId(id);
+        preguntaExistente.setDescripcion(pregunta.getDescripcion());
+        return preguntaRepository.save(preguntaExistente);
     }
 
     @Override
     public void eliminarPregunta(Long id) {
-        preguntaRepository.deleteById(id);
-}
+        Pregunta pregunta = obtenerPreguntaPorId(id);
+        preguntaRepository.delete(pregunta);
+    }
 }

@@ -19,7 +19,7 @@ public class ResultadoTest {
     @Column(name = "recomendaciones", columnDefinition = "TEXT")
     private String recomendacion;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "prueba_vocacional_id", referencedColumnName = "id")
     private PruebaVocacional pruebaVocacional;
 

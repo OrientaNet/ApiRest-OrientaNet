@@ -12,6 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/respuestas")
 public class RespuestaController {
+
     @Autowired
     private RespuestaService respuestaService;
 
@@ -37,8 +38,8 @@ public class RespuestaController {
         if (respuesta.isPresent()) {
             Respuesta respuestaExistente = respuesta.get();
             respuestaExistente.setDescripcion(respuestaActualizada.getDescripcion());
-            respuestaExistente.setValor(respuestaActualizada.getValor());
             respuestaExistente.setPregunta(respuestaActualizada.getPregunta());
+            respuestaExistente.setCarrera(respuestaActualizada.getCarrera());
             return ResponseEntity.ok(respuestaService.guardarRespuesta(respuestaExistente));
         } else {
             return ResponseEntity.notFound().build();

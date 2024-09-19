@@ -3,14 +3,12 @@ package com.grupo2.orientanet.service;
 import com.grupo2.orientanet.model.entity.Pregunta;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PreguntaService {
+
+    Pregunta crearPregunta(Pregunta pregunta);
     List<Pregunta> listarPreguntas();
-
-    Optional<Pregunta> obtenerPreguntaPorId(Long id);
-
-    Pregunta guardarPregunta(Pregunta pregunta);
-
+    Pregunta obtenerPreguntaPorId(Long id);
+    Pregunta actualizarPregunta(Long id, Pregunta pregunta);
     void eliminarPregunta(Long id);
 }

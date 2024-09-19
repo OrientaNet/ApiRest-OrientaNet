@@ -16,7 +16,5 @@ public class Carrera {
     @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @OneToMany(mappedBy = "carrera")
-    private List<ResultadoTest> resultadosTests;
 }
 

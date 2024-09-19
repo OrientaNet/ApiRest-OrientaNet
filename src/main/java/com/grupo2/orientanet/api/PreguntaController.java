@@ -7,41 +7,32 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/preguntas")
 public class PreguntaController {
+
     @Autowired
     private PreguntaService preguntaService;
 
+    @PostMapping
+    public ResponseEntity<Pregunta> crearPregunta(@RequestBody Pregunta pregunta) {
+        return ResponseEntity.ok(preguntaService.crearPregunta(pregunta));
+    }
+
     @GetMapping
-    public List<Pregunta> listarPreguntas() {
-        return preguntaService.listarPreguntas();
+    public ResponseEntity<List<Pregunta>> listarPreguntas() {
+        return ResponseEntity.ok(preguntaService.listarPreguntas());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Pregunta> obtenerPreguntaPorId(@PathVariable Long id) {
-        Optional<Pregunta> pregunta = preguntaService.obtenerPreguntaPorId(id);
-        return pregunta.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-    @PostMapping
-    public Pregunta guardarPregunta(@RequestBody Pregunta pregunta) {
-        return preguntaService.guardarPregunta(pregunta);
+        return ResponseEntity.ok(preguntaService.obtenerPreguntaPorId(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Pregunta> actualizarPregunta(@PathVariable Long id, @RequestBody Pregunta preguntaActualizada) {
-        Optional<Pregunta> pregunta = preguntaService.obtenerPreguntaPorId(id);
-        if (pregunta.isPresent()) {
-            Pregunta preguntaExistente = pregunta.get();
-            preguntaExistente.setEnunciado(preguntaActualizada.getEnunciado());
-            preguntaExistente.setPruebaVocacional(preguntaActualizada.getPruebaVocacional());
-            return ResponseEntity.ok(preguntaService.guardarPregunta(preguntaExistente));
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Pregunta> actualizarPregunta(@PathVariable Long id, @RequestBody Pregunta pregunta) {
+        return ResponseEntity.ok(preguntaService.actualizarPregunta(id, pregunta));
     }
 
     @DeleteMapping("/{id}")

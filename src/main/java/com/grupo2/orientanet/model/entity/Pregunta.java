@@ -1,9 +1,14 @@
 package com.grupo2.orientanet.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,10 +23,16 @@ public class Pregunta {
 
 
     @Column(name = "pregunta_text", columnDefinition = "TEXT")
-    private String enunciado;
+    private String Descripcion;
+
+
+
+    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Respuesta> respuestas;
 
     @ManyToOne
     @JoinColumn(name = "prueba_vocacional_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_pregunta_prueba_vocacional"))
+    @JsonBackReference
     private PruebaVocacional pruebaVocacional;
-
 }
