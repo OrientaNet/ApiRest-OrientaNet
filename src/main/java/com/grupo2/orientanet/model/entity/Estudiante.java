@@ -1,5 +1,7 @@
 package com.grupo2.orientanet.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,5 +36,9 @@ public class Estudiante  {
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_estudiantes_usuarios"))
     private Usuario usuario;
+
+    @OneToOne
+    @JoinColumn(name = "resultado_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_estudiante_resultado_test"))
+    private ResultadoTest resultadoTest;
 
 }

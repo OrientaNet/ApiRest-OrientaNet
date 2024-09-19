@@ -1,13 +1,7 @@
 package com.grupo2.orientanet.service.impl;
 
-import com.grupo2.orientanet.model.entity.Carrera;
-import com.grupo2.orientanet.model.entity.PruebaVocacional;
-import com.grupo2.orientanet.model.entity.Respuesta;
-import com.grupo2.orientanet.model.entity.ResultadoTest;
-import com.grupo2.orientanet.repository.CarreraRepository;
-import com.grupo2.orientanet.repository.PruebaVocacionaRepository;
-import com.grupo2.orientanet.repository.RespuestaRepository;
-import com.grupo2.orientanet.repository.ResultadoTestRepository;
+import com.grupo2.orientanet.model.entity.*;
+import com.grupo2.orientanet.repository.*;
 import com.grupo2.orientanet.service.PruebaVocacionalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,6 +24,9 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
 
     @Autowired
     private RespuestaRepository respuestaRepository;
+
+    @Autowired
+    private EstudianteRepository estudianteRepository;
 
 
 
@@ -73,10 +70,14 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
 
 
     @Override
-    public ResultadoTest realizarPrueba(Long pruebaId, Map<Long, Long> respuestasSeleccionadas) {
+    public ResultadoTest realizarPrueba(Long pruebaId,Long estudianteId, Map<Long, Long> respuestasSeleccionadas) {
         // Buscar la prueba vocacional
         PruebaVocacional prueba = pruebaVocacionalRepository.findById(pruebaId)
                 .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
+
+
+        Estudiante estudiante = estudianteRepository.findById(estudianteId)
+                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
 
         // Mapa para contar los puntos de cada carrera
         Map<Long, Integer> contadorCarreras = new HashMap<>();
@@ -111,11 +112,15 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         Carrera carreraRecomendada = carreraRepository.findById(carreraRecomendadaId)
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
 
+
+
         // Crear el resultado del test
         ResultadoTest resultado = new ResultadoTest();
-        resultado.setPruebaVocacional(prueba);  // Asignar la prueba vocacional
+        resultado.setPruebaNombre(prueba.getNombre());  // Asignar la prueba vocacional
+        resultado.setEstudianteId(estudiante.getId());
         resultado.setCarrera(carreraRecomendada);
         resultado.setRecomendacion("La carrera recomendada es: " + carreraRecomendada.getNombre());
+        estudiante.setResultadoTest(resultado);
 
         // Guardar y devolver el resultado del test
         return resultadoTestRepository.save(resultado);

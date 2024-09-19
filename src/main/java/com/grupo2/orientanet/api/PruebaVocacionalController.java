@@ -57,12 +57,13 @@ public class PruebaVocacionalController {
 
 
     // Endpoint para realizar la prueba vocacional
-    @PostMapping("/{pruebaId}/realizar")
+    @PostMapping("/{estudianteId}/realizar/{pruebaId}")
     public ResponseEntity<ResultadoTest> realizarPrueba(
             @PathVariable Long pruebaId,
+            @PathVariable Long estudianteId,
             @RequestBody Map<Long, Long> respuestasSeleccionadas) {
 
-        ResultadoTest resultado = pruebaVocacionalService.realizarPrueba(pruebaId, respuestasSeleccionadas);
+        ResultadoTest resultado = pruebaVocacionalService.realizarPrueba(pruebaId, estudianteId, respuestasSeleccionadas);
         return ResponseEntity.ok(resultado);
     }
 

@@ -27,9 +27,7 @@ public class PruebaVocacional {
     @JsonManagedReference
     private List<Pregunta> preguntas;
 
-    @ManyToOne
-    @JoinColumn(name = "estudiante_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_prueba_vocacional_estudiantes"))
-    private Estudiante estudiante;
+
 
 
 }

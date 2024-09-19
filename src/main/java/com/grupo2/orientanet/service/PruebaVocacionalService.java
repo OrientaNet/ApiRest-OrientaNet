@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface PruebaVocacionalService {
 
-    ResultadoTest realizarPrueba(Long pruebaId, Map<Long, Long> respuestasSeleccionadas);
+    ResultadoTest realizarPrueba(Long pruebaId,Long estudianteId, Map<Long, Long> respuestasSeleccionadas);
 
     PruebaVocacional crearPrueba(PruebaVocacional pruebaVocacional);
 
