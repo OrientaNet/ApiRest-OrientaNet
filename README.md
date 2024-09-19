@@ -70,7 +70,11 @@ Para ejecutar este proyecto en tu entorno local, sigue los pasos a continuación
 
 | Nombre                         | Rol               | Perfil   |
 |---------------------------------|-------------------|----------|
-| [Talledo Machado Luis]                     | Líder del Proyecto | [LinkedIn](https://linkedin.com/in/tu-perfil) |
+| [Talledo Machado Luis]                     | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/luis-talledo-3157bb261/) |
+| [Villajulca Quispe Diego]                     | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/) |
+| [Tandaypan Garibay Luis]                     | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/) |
+| [Donayre Alvares Jose]                     | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/) |
+| [Ortiz Barbosa Anghelo]                     | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/) |
 
 ## Progreso del Proyecto
 
@@ -82,7 +86,7 @@ Para ejecutar este proyecto en tu entorno local, sigue los pasos a continuación
 | En Pruebas   | Contiene las tareas que han pasado la revisión de código y necesitan pruebas exhaustivas.            |
 | Hecho        | Las tareas completamente desarrolladas, revisadas y probadas.                                        |
 
-Puedes ver el tablero del proyecto aquí: [Tablero de Trello](https://trello.com).
+Puedes ver el tablero del proyecto aquí: [Tablero de Trello](https://trello.com/b/07sWD52f/orientanet).
 
 ## Licencia
 
