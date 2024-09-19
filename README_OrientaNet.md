@@ -46,15 +46,21 @@
 Para ejecutar este proyecto en tu entorno local, sigue los pasos a continuación:
 
 1. Clona este repositorio:
-   `git clone https://github.com/tu-usuario/orientanet.git`
+   \`\`\`bash
+   git clone https://github.com/tu-usuario/orientanet.git
+   \`\`\`
 
 2. Instala las dependencias necesarias:
-   `npm install`
+   \`\`\`bash
+   npm install
+   \`\`\`
 
 3. Configura la base de datos en el archivo `.env` con las credenciales correspondientes.
 
 4. Ejecuta la aplicación:
-   `npm start`
+   \`\`\`bash
+   npm start
+   \`\`\`
 
 ## Tecnologías Utilizadas
 
@@ -70,7 +76,7 @@ Para ejecutar este proyecto en tu entorno local, sigue los pasos a continuación
 
 | Nombre                         | Rol               | Perfil   |
 |---------------------------------|-------------------|----------|
-| [Talledo Machado Luis]                     | Líder del Proyecto | [LinkedIn](https://linkedin.com/in/tu-perfil) |
+| [Tu Nombre]                     | Líder del Proyecto | [LinkedIn](https://linkedin.com/in/tu-perfil) |
 
 ## Progreso del Proyecto
 
@@ -87,3 +93,4 @@ Puedes ver el tablero del proyecto aquí: [Tablero de Trello](https://trello.com
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para obtener más información.
+
