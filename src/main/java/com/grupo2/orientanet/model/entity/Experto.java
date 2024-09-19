@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,4 +34,7 @@ public class Experto {
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_expertos_usuarios"))
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "experto")
+    private List<RecursoEducativo> recursoEducativo;
 }
