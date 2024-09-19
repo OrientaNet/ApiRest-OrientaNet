@@ -74,13 +74,14 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
 
     @Override
     public ResultadoTest realizarPrueba(Long pruebaId, Map<Long, Long> respuestasSeleccionadas) {
+        // Buscar la prueba vocacional
         PruebaVocacional prueba = pruebaVocacionalRepository.findById(pruebaId)
                 .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
 
         // Mapa para contar los puntos de cada carrera
         Map<Long, Integer> contadorCarreras = new HashMap<>();
 
-        // Obtener todas las carreras
+        // Obtener todas las carreras y inicializar el contador
         List<Carrera> carreras = carreraRepository.findAll();
         for (Carrera carrera : carreras) {
             contadorCarreras.put(carrera.getId(), 0); // Inicializar el contador para cada carrera
@@ -88,7 +89,6 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
 
         // Iterar sobre las respuestas seleccionadas
         for (Map.Entry<Long, Long> entrada : respuestasSeleccionadas.entrySet()) {
-            Long preguntaId = entrada.getKey(); // ID de la pregunta
             Long respuestaId = entrada.getValue(); // ID de la respuesta seleccionada
 
             // Obtener la respuesta seleccionada
@@ -111,13 +111,16 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         Carrera carreraRecomendada = carreraRepository.findById(carreraRecomendadaId)
                 .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
 
-        // Guardar el resultado del test
+        // Crear el resultado del test
         ResultadoTest resultado = new ResultadoTest();
+        resultado.setPruebaVocacional(prueba);  // Asignar la prueba vocacional
         resultado.setCarrera(carreraRecomendada);
         resultado.setRecomendacion("La carrera recomendada es: " + carreraRecomendada.getNombre());
 
+        // Guardar y devolver el resultado del test
         return resultadoTestRepository.save(resultado);
     }
+
 
 
 }

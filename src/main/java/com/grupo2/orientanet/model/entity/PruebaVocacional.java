@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +23,8 @@ public class PruebaVocacional {
     @Column(name = "nombre")
     private String nombre;
 
-    @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL,  orphanRemoval = true)
+    @JsonManagedReference
     private List<Pregunta> preguntas;
 
     @ManyToOne
