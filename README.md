@@ -71,6 +71,7 @@ Para ejecutar este proyecto en tu entorno local, sigue los pasos a continuación
 | Nombre                         | Rol               | Perfil   |
 |---------------------------------|-------------------|----------|
 | [Talledo Machado Luis]                     | Líder del Proyecto | [LinkedIn](https://linkedin.com/in/tu-perfil) |
+| [Talledo Machado Luis]                     | Desarrollador      | [LinkedIn](https://www.linkedin.com/in/diego-villajulca-291b21202?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3B2bSMIEBvTbu2iV1A6cA9WA%3D%3D) |
 
 ## Progreso del Proyecto
 
