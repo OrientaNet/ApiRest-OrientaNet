@@ -36,7 +36,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario getById(Long id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado TONTO"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Usuario getByEmail(String email) {
+        return usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
     }
 
     @Transactional
