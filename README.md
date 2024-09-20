@@ -71,8 +71,8 @@ Para ejecutar este proyecto en tu entorno local, sigue los pasos a continuación
 | Nombre                         | Rol               | Perfil   |
 |---------------------------------|-------------------|----------|
 | [Talledo Machado Luis]                     | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/luis-talledo-3157bb261/) |
-| [Villajulca Quispe Diego]                     | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/) |
-| [Tandaypan Garibay Luis]                     | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/) |
+| [Villajulca Quispe Diego]                     | Líder del Proyecto | [LinkedIn]([https://www.linkedin.com/in/](https://www.linkedin.com/in/diego-villajulca-291b21202)) |
+| [Tandaypan Garibay Luis]                     | Líder del Proyecto | [LinkedIn](www.linkedin.com/in/luis-enrique-tandaypan-garibay-35908b32a) |
 | [Donayre Alvares Jose]                     | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/) |
 | [Ortiz Barbosa Anghelo]                     | Líder del Proyecto | [LinkedIn](https://www.linkedin.com/in/) |
 
