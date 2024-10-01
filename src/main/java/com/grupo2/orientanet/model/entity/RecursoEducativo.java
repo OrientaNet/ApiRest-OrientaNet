@@ -33,6 +33,10 @@ public class RecursoEducativo {
     private String url;
 
     @ManyToOne
+    @JoinColumn(name = "carrera_id", nullable = false)
+    private Carrera carrera;
+
+    @ManyToOne
     @JoinColumn(name = "experto_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_recurso_educativo_experto"))
     private Experto experto;
 }
