@@ -1,6 +1,7 @@
 package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.CarreraDTO;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.CarreraMapper;
 import com.grupo2.orientanet.model.entity.Carrera;
 import com.grupo2.orientanet.model.entity.Usuario;
@@ -32,7 +33,7 @@ public class CarreraServiceImpl implements CarreraService {
     @Override
     public CarreraDTO obtenerCarreraPorId(Long id) {
         Carrera carrera = carreraRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Carrera no encontrada"));
         return carreraMapper.toDTO(carrera);
     }
 
@@ -52,7 +53,7 @@ public class CarreraServiceImpl implements CarreraService {
         }
 
         Carrera existingCarrera = carreraRepository.findById(id)
-                .orElseThrow(() -> new Exception("La carrera no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("La carrera no existe"));
 
         existingCarrera.setNombre(carreraDTO.getNombre());
         existingCarrera.setDescripcion(carreraDTO.getDescripcion());
@@ -65,7 +66,7 @@ public class CarreraServiceImpl implements CarreraService {
     @Override
     public void eliminarCarrera(Long id) {
         Carrera carrera = carreraRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("El id de la carrera no fue encontrada"));
+                .orElseThrow(()-> new ResourceNotFoundException("El id de la carrera no fue encontrada"));
         carreraRepository.delete(carrera);
     }
 }

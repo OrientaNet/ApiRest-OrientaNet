@@ -1,6 +1,7 @@
 package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.PruebaVocacionalDTO;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.PruebaVocacionalMapper;
 import com.grupo2.orientanet.model.entity.*;
 import com.grupo2.orientanet.repository.*;
@@ -49,7 +50,7 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
     @Override
     public PruebaVocacionalDTO obtenerPruebaPorId(Long id) {
         PruebaVocacional pruebaVocacional = pruebaVocacionalRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Prueba vocacional no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Prueba vocacional no encontrada"));
         return pruebaVocacionalMapper.toDTO(pruebaVocacional);
     }
 
@@ -68,11 +69,11 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
     public PruebaVocacionalDTO actualizarPrueba(Long id, PruebaVocacionalDTO pruebaVocacionalDTO) throws Exception{
 
         if (!pruebaVocacionalRepository.existsById(id)) {
-            throw new Exception("La prueba vocacional no existe");
+            throw new ResourceNotFoundException("La prueba vocacional no existe");
         }
 
         PruebaVocacional existingPrueba = pruebaVocacionalRepository.findById(id)
-                .orElseThrow(() -> new Exception("La pregunta con el id "+id+" no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("La pregunta con el id "+id+" no existe"));
 
         existingPrueba.setNombre(pruebaVocacionalDTO.getNombre());
 
@@ -96,7 +97,7 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
     @Override
     public void eliminarPrueba(Long id) {
        PruebaVocacional pruebaVocacional =  pruebaVocacionalRepository.findById(id)
-               .orElseThrow(()-> new RuntimeException("El id de la prueba vocacional no fue encontrado"));
+               .orElseThrow(()-> new ResourceNotFoundException("El id de la prueba vocacional no fue encontrado"));
        pruebaVocacionalRepository.delete(pruebaVocacional);
     }
 
@@ -106,11 +107,11 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
     public ResultadoTest realizarPrueba(Long pruebaId,Long estudianteId, Map<Long, Long> respuestasSeleccionadas) {
         // Buscar la prueba vocacional
         PruebaVocacional prueba = pruebaVocacionalRepository.findById(pruebaId)
-                .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Prueba no encontrada"));
 
 
         Estudiante estudiante = estudianteRepository.findById(estudianteId)
-                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado"));
 
         // Mapa para contar los puntos de cada carrera
         Map<Long, Integer> contadorCarreras = new HashMap<>();
@@ -127,7 +128,7 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
 
             // Obtener la respuesta seleccionada
             Respuesta respuesta = respuestaRepository.findById(respuestaId)
-                    .orElseThrow(() -> new RuntimeException("Respuesta no encontrada"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Respuesta no encontrada"));
 
             // Obtener el ID de la carrera asociada a la respuesta
             Long carreraIdAsociada = respuesta.getCarrera().getId();
@@ -143,7 +144,7 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
                 .getKey();
 
         Carrera carreraRecomendada = carreraRepository.findById(carreraRecomendadaId)
-                .orElseThrow(() -> new RuntimeException("Carrera no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Carrera no encontrada"));
 
 
 

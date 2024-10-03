@@ -1,6 +1,7 @@
 package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.EstudianteDTO;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.EstudianteMapper;
 import com.grupo2.orientanet.model.entity.Carrera;
 import com.grupo2.orientanet.model.entity.Estudiante;
@@ -40,7 +41,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Override
     public EstudianteDTO findById(Long id) {
         Estudiante estudiante = estudianteRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Estudiante no encontrado"));
+                .orElseThrow(()-> new ResourceNotFoundException("Estudiante no encontrado"));
         return estudianteMapper.toDTO(estudiante);
     }
 
@@ -62,7 +63,7 @@ public class EstudianteServiceImpl implements EstudianteService {
         }
 
         Estudiante existingEstudiante = estudianteRepository.findById(id)
-                .orElseThrow(() -> new Exception("El estudiante con el id "+id+" no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El estudiante con el id "+id+" no existe"));
 
                     existingEstudiante.setInformacionPersonal(estudianteDetails.getInformacionPersonal());
                     existingEstudiante.setNivelAcademico(estudianteDetails.getNivelAcademico());
@@ -86,7 +87,7 @@ public class EstudianteServiceImpl implements EstudianteService {
     @Override
     public void delete(Long id) {
         Estudiante estudiante = estudianteRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("El id del estudiante no fue encontrado"));
+                .orElseThrow(()-> new ResourceNotFoundException("El id del estudiante no fue encontrado"));
         estudianteRepository.delete(estudiante);
     }
 

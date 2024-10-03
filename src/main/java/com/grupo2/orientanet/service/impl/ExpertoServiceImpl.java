@@ -1,6 +1,7 @@
 package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.ExpertoDTO;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.ExpertoMapper;
 import com.grupo2.orientanet.model.entity.Carrera;
 import com.grupo2.orientanet.model.entity.Experto;
@@ -37,7 +38,7 @@ public class ExpertoServiceImpl implements ExpertoService {
     @Override
     public ExpertoDTO findById(Long id) {
         Experto experto = expertoRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Experto no encontrado"));
+                .orElseThrow(()-> new ResourceNotFoundException("Experto no encontrado"));
         return expertoMapper.toDTO(experto);
     }
 
@@ -59,7 +60,7 @@ public class ExpertoServiceImpl implements ExpertoService {
         }
 
         Experto existingExperto = expertoRepository.findById(id)
-                .orElseThrow(() -> new Exception("El experto con el id "+id+" no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("El experto con el id "+id+" no existe"));
 
 
                     existingExperto.setInformacionPersonal(expertoDetails.getInformacionPersonal());
@@ -82,7 +83,7 @@ public class ExpertoServiceImpl implements ExpertoService {
     @Transactional
     @Override
     public void delete(Long id) {
-        Experto experto = expertoRepository.findById(id).orElseThrow(()-> new RuntimeException("El id del experto no fue encontrado"));
+        Experto experto = expertoRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("El id del experto no fue encontrado"));
         expertoRepository.delete(experto);
     }
 }

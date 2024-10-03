@@ -2,6 +2,8 @@ package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.UsuarioRequestDTO;
 import com.grupo2.orientanet.dto.UsuarioResponseDTO;
+import com.grupo2.orientanet.exception.BadRequestException;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.UsuarioMapper;
 import com.grupo2.orientanet.model.entity.Usuario;
 import com.grupo2.orientanet.repository.UsuarioRepository;
@@ -38,7 +40,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UsuarioResponseDTO getById(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario con el "+id+" no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con el "+id+" no encontrado"));
         return usuarioMapper.responseToDTO(usuario);
     }
 
@@ -46,7 +48,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UsuarioResponseDTO getByEmail(String email) {
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                    .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
         return  usuarioMapper.responseToDTO(usuario);
     }
 
@@ -56,7 +58,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
         if (usuarioRepository.existsByEmail(usuarioRequestDTO.getEmail())) {
-            throw new Exception("El correo electrónico ya está registrado.");
+            throw new BadRequestException("El correo electrónico ya está registrado.");
         }
 
         Usuario usuario = usuarioMapper.requestToEntity(usuarioRequestDTO);
@@ -71,7 +73,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public UsuarioRequestDTO update(Long id, UsuarioRequestDTO updateUsuarioRequestDTO) throws Exception {
         if (!usuarioRepository.existsById(id)) {
-            throw new Exception("El usuario no existe");
+            throw new ResourceNotFoundException("El usuario no existe");
         }
 
         // Verificar si el correo ya existe en la base de datos y si es de otro usuario
@@ -98,7 +100,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     @Override
     public void delete(Long id) {
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(()-> new RuntimeException("el id del usuario no fue encontrado"));
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("el id del usuario no fue encontrado"));
         usuarioRepository.delete(usuario);
     }
 }

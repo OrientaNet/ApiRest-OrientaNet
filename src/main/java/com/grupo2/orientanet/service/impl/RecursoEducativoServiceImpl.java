@@ -2,6 +2,7 @@ package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.RecursoEducativoDTO;
 import com.grupo2.orientanet.dto.UsuarioRequestDTO;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.RecursoEducativoMapper;
 import com.grupo2.orientanet.model.entity.RecursoEducativo;
 import com.grupo2.orientanet.model.entity.Usuario;
@@ -44,7 +45,7 @@ public class RecursoEducativoServiceImpl implements RecursoEducativoService {
     @Override
     public RecursoEducativoDTO getById(Long id) {
         RecursoEducativo recursoEducativo = recursoEducativoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Recurso educativo con el "+id+" no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Recurso educativo con el "+id+" no encontrado"));
         return recursoEducativoMapper.toDTO(recursoEducativo);
     }
 
@@ -52,7 +53,7 @@ public class RecursoEducativoServiceImpl implements RecursoEducativoService {
     @Override
     public void deleteById(Long id) {
         RecursoEducativo recursoEducativo = recursoEducativoRepository
-                .findById(id).orElseThrow(()-> new RuntimeException("el id del recurso educativo no fue encontrado"));
+                .findById(id).orElseThrow(()-> new ResourceNotFoundException("el id del recurso educativo no fue encontrado"));
         recursoEducativoRepository.delete(recursoEducativo);
     }
 

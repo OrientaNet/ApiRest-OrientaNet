@@ -1,6 +1,7 @@
 package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.RespuestaDTO;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.RespuestaMapper;
 import com.grupo2.orientanet.model.entity.Respuesta;
 import com.grupo2.orientanet.repository.RespuestaRepository;
@@ -32,7 +33,7 @@ public class RespuestaServiceImpl implements RespuestaService {
     public RespuestaDTO obtenerRespuestaPorId(Long id) {
 
         Respuesta respuesta = respuestaRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Respuesta no encontrada"));
+                .orElseThrow(()-> new ResourceNotFoundException("Respuesta no encontrada"));
         return respuestaMapper.toDTO(respuesta);
     }
 
@@ -48,7 +49,7 @@ public class RespuestaServiceImpl implements RespuestaService {
     @Override
     public void eliminarRespuesta(Long id) {
         Respuesta respuesta = respuestaRepository.findById(id)
-                        .orElseThrow(()-> new RuntimeException("El id de la respuesta no fue encontrada"));
+                        .orElseThrow(()-> new ResourceNotFoundException("El id de la respuesta no fue encontrada"));
         respuestaRepository.deleteById(id);
     }
 }
