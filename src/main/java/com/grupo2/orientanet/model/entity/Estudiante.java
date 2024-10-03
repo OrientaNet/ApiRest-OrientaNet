@@ -30,8 +30,9 @@ public class Estudiante  {
     @Column(name = "intereses", columnDefinition = "TEXT")
     private String intereses;
 
-    @Column(name = "carrera_Interes")
-    private String carreraInteres;
+    @ManyToOne
+    @JoinColumn(name = "carrera_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_estudiante_carrera"))
+    private Carrera carreraInteres;
 
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_estudiantes_usuarios"))

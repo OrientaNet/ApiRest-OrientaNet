@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.api;
 
+import com.grupo2.orientanet.dto.ExpertoDTO;
 import com.grupo2.orientanet.model.entity.Experto;
 import com.grupo2.orientanet.service.ExpertoService;
 import jakarta.validation.Valid;
@@ -18,40 +19,35 @@ public class ExpertoController {
     private final ExpertoService expertoService;
 
     @GetMapping
-    public ResponseEntity<List<Experto>> getAllExpertos() {
-        List<Experto> expertos = expertoService.findAll();
+    public ResponseEntity<List<ExpertoDTO>> getAllExpertos() {
+        List<ExpertoDTO> expertos = expertoService.findAll();
         return new ResponseEntity<>(expertos, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Experto> getExpertoById(@PathVariable Long id) {
-        return expertoService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<ExpertoDTO> getExpertoById(@PathVariable Long id) {
+        ExpertoDTO expertoDTO = expertoService.findById(id);
+        return new ResponseEntity<>(expertoDTO, HttpStatus.OK);
+
     }
 
     @PostMapping
-    public ResponseEntity<Experto> createExperto(@Valid @RequestBody Experto experto) {
-        Experto createdExperto = expertoService.save(experto);
+    public ResponseEntity<ExpertoDTO> createExperto(@Valid @RequestBody ExpertoDTO expertoDTO) {
+        ExpertoDTO createdExperto = expertoService.save(expertoDTO);
         return new ResponseEntity<>(createdExperto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Experto> updateExperto(@PathVariable Long id, @Valid @RequestBody Experto expertoDetails) {
-        try {
-            Experto updatedExperto = expertoService.update(id, expertoDetails);
-            return ResponseEntity.ok(updatedExperto);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ExpertoDTO> updateExperto(@PathVariable Long id, @Valid @RequestBody ExpertoDTO expertoDetails) throws Exception{
+
+        ExpertoDTO expertoDTO = expertoService.update(id, expertoDetails);
+
+        return  new ResponseEntity<>(expertoDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteExperto(@PathVariable Long id) {
-        if (expertoService.findById(id).isPresent()) {
-            expertoService.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        expertoService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

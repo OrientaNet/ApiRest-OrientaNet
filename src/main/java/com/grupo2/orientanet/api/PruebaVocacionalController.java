@@ -1,9 +1,12 @@
 package com.grupo2.orientanet.api;
 
+import com.grupo2.orientanet.dto.PruebaVocacionalDTO;
 import com.grupo2.orientanet.model.entity.PruebaVocacional;
 import com.grupo2.orientanet.model.entity.ResultadoTest;
 import com.grupo2.orientanet.service.PruebaVocacionalService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,39 +23,39 @@ public class PruebaVocacionalController {
 
     // Crear una nueva prueba vocacional
     @PostMapping
-    public ResponseEntity<PruebaVocacional> crearPrueba(@RequestBody PruebaVocacional pruebaVocacional) {
-        PruebaVocacional nuevaPrueba = pruebaVocacionalService.crearPrueba(pruebaVocacional);
+    public ResponseEntity<PruebaVocacionalDTO> crearPrueba(@Valid @RequestBody PruebaVocacionalDTO pruebaVocacionalDTO) {
+        PruebaVocacionalDTO nuevaPrueba = pruebaVocacionalService.crearPrueba(pruebaVocacionalDTO);
         return ResponseEntity.ok(nuevaPrueba);
     }
 
     // Obtener una prueba vocacional por ID
     @GetMapping("/{id}")
-    public ResponseEntity<PruebaVocacional> obtenerPrueba(@PathVariable Long id) {
-        PruebaVocacional prueba = pruebaVocacionalService.obtenerPruebaPorId(id);
-        return ResponseEntity.ok(prueba);
+    public ResponseEntity<PruebaVocacionalDTO> obtenerPrueba(@PathVariable Long id) {
+        PruebaVocacionalDTO prueba = pruebaVocacionalService.obtenerPruebaPorId(id);
+        return new ResponseEntity<>(prueba, HttpStatus.OK);
     }
 
     // Obtener todas las pruebas vocacionales
     @GetMapping
-    public ResponseEntity<List<PruebaVocacional>> obtenerTodasLasPruebas() {
-        List<PruebaVocacional> pruebas = pruebaVocacionalService.obtenerTodasLasPruebas();
-        return ResponseEntity.ok(pruebas);
+    public ResponseEntity<List<PruebaVocacionalDTO>> obtenerTodasLasPruebas() {
+        List<PruebaVocacionalDTO> pruebas = pruebaVocacionalService.obtenerTodasLasPruebas();
+        return new ResponseEntity<>(pruebas, HttpStatus.OK);
     }
 
     // Actualizar una prueba vocacional
     @PutMapping("/{id}")
-    public ResponseEntity<PruebaVocacional> actualizarPrueba(
+    public ResponseEntity<PruebaVocacionalDTO> actualizarPrueba(
             @PathVariable Long id,
-            @RequestBody PruebaVocacional pruebaVocacional) {
-        PruebaVocacional pruebaActualizada = pruebaVocacionalService.actualizarPrueba(id, pruebaVocacional);
-        return ResponseEntity.ok(pruebaActualizada);
+            @Valid @RequestBody PruebaVocacionalDTO pruebaVocacionalDTO) throws Exception {
+        PruebaVocacionalDTO pruebaActualizada = pruebaVocacionalService.actualizarPrueba(id, pruebaVocacionalDTO);
+        return new ResponseEntity<>(pruebaActualizada, HttpStatus.OK);
     }
 
     // Eliminar una prueba vocacional por ID
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarPrueba(@PathVariable Long id) {
         pruebaVocacionalService.eliminarPrueba(id);
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 

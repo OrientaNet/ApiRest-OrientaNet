@@ -1,5 +1,10 @@
 package com.grupo2.orientanet.service.impl;
 
+import com.grupo2.orientanet.dto.UsuarioRequestDTO;
+import com.grupo2.orientanet.dto.UsuarioResponseDTO;
+import com.grupo2.orientanet.exception.BadRequestException;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
+import com.grupo2.orientanet.mapper.UsuarioMapper;
 import com.grupo2.orientanet.model.entity.Usuario;
 import com.grupo2.orientanet.repository.UsuarioRepository;
 import com.grupo2.orientanet.service.UsuarioService;
@@ -15,96 +20,87 @@ import java.time.LocalDateTime;
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
-
-    private static final String REGEX_NOMBRE = "^[a-zA-ZáéíóúÁÉÍÓÚñÑ]{2,}$";
-    private static final String REGEX_EMAIL = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
-    private static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$";
+    private final UsuarioMapper usuarioMapper;
 
 
     @Autowired
-    UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
+    UsuarioServiceImpl(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper) {
         this.usuarioRepository = usuarioRepository;
+        this.usuarioMapper = usuarioMapper;
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Usuario> getAll() {
-        return usuarioRepository.findAll();
+    public List<UsuarioResponseDTO> getAll() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        return usuarios.stream().map(usuarioMapper::responseToDTO).toList();
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Usuario getById(Long id) {
-        return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    public UsuarioResponseDTO getById(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario con el "+id+" no encontrado"));
+        return usuarioMapper.responseToDTO(usuario);
     }
 
     @Transactional(readOnly = true)
     @Override
-    public Usuario getByEmail(String email) {
-        return usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    public UsuarioResponseDTO getByEmail(String email) {
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                    .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+        return  usuarioMapper.responseToDTO(usuario);
     }
 
     @Transactional
     @Override
-    public Usuario create(Usuario nuevoUsuario) throws Exception {
-        validarUsuario(nuevoUsuario);
+    public UsuarioRequestDTO create(UsuarioRequestDTO usuarioRequestDTO) throws Exception {
 
-        // Verificar si el correo ya existe en la base de datos
-        if (usuarioRepository.existsByEmail(nuevoUsuario.getEmail())) {
-            throw new Exception("El correo electrónico ya está registrado.");
+
+        if (usuarioRepository.existsByEmail(usuarioRequestDTO.getEmail())) {
+            throw new BadRequestException("El correo electrónico ya está registrado.");
         }
 
-        return usuarioRepository.save(nuevoUsuario);
+        Usuario usuario = usuarioMapper.requestToEntity(usuarioRequestDTO);
+        usuario.setCreatedAt(LocalDateTime.now());
+        usuario = usuarioRepository.save(usuario);
+
+        return usuarioMapper.requestToDTO(usuario);
+
     }
 
     @Transactional
     @Override
-    public Usuario update(Long id, Usuario updateUsuario) throws Exception {
+    public UsuarioRequestDTO update(Long id, UsuarioRequestDTO updateUsuarioRequestDTO) throws Exception {
         if (!usuarioRepository.existsById(id)) {
-            throw new Exception("El usuario no existe");
+            throw new ResourceNotFoundException("El usuario no existe");
         }
 
         // Verificar si el correo ya existe en la base de datos y si es de otro usuario
         Usuario existingUsuario = usuarioRepository.findById(id).orElseThrow(() -> new Exception("El usuario no existe"));
-        validarUsuario(updateUsuario);
+
 
         // Copiar valores de los campos que se deben actualizar
-        existingUsuario.setNombre(updateUsuario.getNombre());
-        existingUsuario.setApellido(updateUsuario.getApellido());
-        existingUsuario.setContrasena(updateUsuario.getContrasena());
-        existingUsuario.setEmail(updateUsuario.getEmail());
-        existingUsuario.setRole(updateUsuario.getRole());
+        existingUsuario.setNombre(updateUsuarioRequestDTO.getNombre());
+        existingUsuario.setApellido(updateUsuarioRequestDTO.getApellido());
+        existingUsuario.setContrasena(updateUsuarioRequestDTO.getContrasena());
+        existingUsuario.setEmail(updateUsuarioRequestDTO.getEmail());
+        existingUsuario.setRole(updateUsuarioRequestDTO.getRole());
         existingUsuario.setUpdatedAt(LocalDateTime.now());  // Actualizar solo el campo updated_at
 
-        return usuarioRepository.save(existingUsuario);
+        existingUsuario = usuarioRepository.save(existingUsuario);
+
+        return usuarioMapper.requestToDTO(existingUsuario);
     }
 
-    private void validarUsuario(Usuario usuario) throws Exception {
-        // Validar nombre
-        if (!Pattern.matches(REGEX_NOMBRE, usuario.getNombre())) {
-            throw new Exception("Nombre inválido. Debe contener al menos 2 caracteres y solo letras.");
-        }
-        // Validar apellido
-        if (!Pattern.matches(REGEX_NOMBRE, usuario.getApellido())) {
-            throw new Exception("Apellido inválido. Debe contener al menos 2 caracteres y solo letras.");
-        }
-        // Validar email
-        if (!Pattern.matches(REGEX_EMAIL, usuario.getEmail())) {
-            throw new Exception("Correo electrónico inválido.");
-        }
-        // Validar contraseña
-        if (!Pattern.matches(REGEX_PASSWORD, usuario.getContrasena())) {
-            throw new Exception("Contraseña inválida. Debe tener al menos 8 caracteres, una letra mayúscula, una minúscula y un número.");
-        }
-    }
+
+
 
 
     @Transactional
     @Override
     public void delete(Long id) {
-        Usuario usuario = getById(id);
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("el id del usuario no fue encontrado"));
         usuarioRepository.delete(usuario);
     }
 }
