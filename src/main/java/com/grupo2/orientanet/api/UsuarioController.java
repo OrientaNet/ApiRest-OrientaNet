@@ -1,7 +1,10 @@
 package com.grupo2.orientanet.api;
 
+import com.grupo2.orientanet.dto.UsuarioRequestDTO;
+import com.grupo2.orientanet.dto.UsuarioResponseDTO;
 import com.grupo2.orientanet.model.entity.Usuario;
 import com.grupo2.orientanet.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,32 +22,32 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> getAllUsuarios() {
-        List<Usuario> usuarios = usuarioService.getAll();
+    public ResponseEntity<List<UsuarioResponseDTO>> getAllUsuarios() {
+        List<UsuarioResponseDTO> usuarios = usuarioService.getAll();
         return new ResponseEntity<>(usuarios, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable("id") Long id) {
-        Usuario usuario = usuarioService.getById(id);
+    public ResponseEntity<UsuarioResponseDTO> getUsuarioById(@PathVariable("id") Long id) {
+        UsuarioResponseDTO usuario = usuarioService.getById(id);
         return new ResponseEntity<>(usuario, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Usuario> createUsuario(@RequestBody Usuario usuario) throws Exception {
-        Usuario newUsuario = usuarioService.create(usuario);
-        return new ResponseEntity<>(usuario, HttpStatus.OK);
+    public ResponseEntity<UsuarioRequestDTO> createUsuario(@Valid @RequestBody UsuarioRequestDTO usuarioRequestDTO) throws Exception {
+        UsuarioRequestDTO createdAutor = usuarioService.create(usuarioRequestDTO);
+        return new ResponseEntity<>(createdAutor, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Usuario> updateUsuario(@PathVariable("id") Long id,
-                                                 @RequestBody Usuario usuario) throws Exception {
-        Usuario updateUsuario = usuarioService.update(id, usuario);
+    public ResponseEntity<UsuarioRequestDTO> updateUsuario(@PathVariable("id") Long id,@Valid
+                                                 @RequestBody UsuarioRequestDTO usuarioRequestDTO) throws Exception {
+        UsuarioRequestDTO updateUsuario = usuarioService.update(id, usuarioRequestDTO);
         return new ResponseEntity<>(updateUsuario, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Usuario> deleteUsuario(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteUsuario(@PathVariable("id") Long id) {
         usuarioService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
+@Table(name = "sesion_asesoria")
 public class SesionAsesoria {
 
     @Id
@@ -33,11 +33,11 @@ public class SesionAsesoria {
     private LocalDateTime fechaFin;
 
     @ManyToOne
-    @JoinColumn(name = "carrera_id", nullable = false)
+    @JoinColumn(name = "carrera_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_sesion_asesoria_carreras"))
     private Carrera carrera;
 
     @ManyToOne
-    @JoinColumn(name = "experto_id", nullable = false)
+    @JoinColumn(name = "experto_id", nullable = false, referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_sesion_asesoria_expertos"))
     private Experto experto;
 
 

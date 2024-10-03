@@ -98,7 +98,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Transactional
     @Override
     public void delete(Long id) {
-        Usuario usuario = usuarioRepository.findById(id).orElseThrow(()-> new RuntimeException("el id del autor no fue encontrado"));
+        Usuario usuario = usuarioRepository.findById(id).orElseThrow(()-> new RuntimeException("el id del usuario no fue encontrado"));
         usuarioRepository.delete(usuario);
     }
 }

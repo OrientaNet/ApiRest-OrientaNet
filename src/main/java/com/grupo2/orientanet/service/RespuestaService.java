@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.service;
 
+import com.grupo2.orientanet.dto.RespuestaDTO;
 import com.grupo2.orientanet.model.entity.Respuesta;
 
 import java.util.List;
@@ -7,11 +8,11 @@ import java.util.Optional;
 
 public interface RespuestaService {
 
-    List<Respuesta> listarRespuestas();
+    List<RespuestaDTO> listarRespuestas();
 
-    Optional<Respuesta> obtenerRespuestaPorId(Long id);
+    RespuestaDTO obtenerRespuestaPorId(Long id);
 
-    Respuesta guardarRespuesta(Respuesta respuesta);
+    RespuestaDTO guardarRespuesta(RespuestaDTO respuestaDTO);
 
     void eliminarRespuesta(Long id);
 }

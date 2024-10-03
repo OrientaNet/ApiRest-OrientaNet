@@ -31,7 +31,7 @@ public class Estudiante  {
     private String intereses;
 
     @ManyToOne
-    @JoinColumn(name = "carrera_interes", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_estudiante_carrera"))
+    @JoinColumn(name = "carrera_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_estudiante_carrera"))
     private Carrera carreraInteres;
 
     @OneToOne
