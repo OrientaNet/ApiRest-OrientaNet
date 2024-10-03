@@ -1,6 +1,7 @@
 package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.ResultadoTestDTO;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.ResultadoTestMapper;
 import com.grupo2.orientanet.model.entity.ResultadoTest;
 import com.grupo2.orientanet.repository.ResultadoTestRepository;
@@ -23,7 +24,7 @@ public class ResultadoTestServiceImpl implements ResultadoTestService {
     @Transactional(readOnly = true)
     public ResultadoTestDTO obtenerResultadoPorId(Long id) {
         ResultadoTest resultadoTest = resultadoTestRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Resultado no encontrado"));
+                .orElseThrow(()-> new ResourceNotFoundException("Resultado no encontrado"));
         return resultadoTestMapper.toDTO(resultadoTest);
     }
 }

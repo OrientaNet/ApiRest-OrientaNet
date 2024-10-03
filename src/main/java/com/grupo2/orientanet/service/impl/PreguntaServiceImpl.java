@@ -1,6 +1,7 @@
 package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.PreguntaDTO;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.PreguntaMapper;
 import com.grupo2.orientanet.model.entity.Estudiante;
 import com.grupo2.orientanet.model.entity.Pregunta;
@@ -44,7 +45,7 @@ public class PreguntaServiceImpl implements PreguntaService {
     @Override
     public PreguntaDTO obtenerPreguntaPorId(Long id) {
         Pregunta pregunta = preguntaRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pregunta no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Pregunta no encontrada"));
         return preguntaMapper.toDTO(pregunta);
     }
 
@@ -57,7 +58,7 @@ public class PreguntaServiceImpl implements PreguntaService {
         }
 
         Pregunta existingPregunta = preguntaRepository.findById(id)
-                .orElseThrow(() -> new Exception("La pregunta con el id "+id+" no existe"));
+                .orElseThrow(() -> new ResourceNotFoundException("La pregunta con el id "+id+" no existe"));
 
 
         existingPregunta.setDescripcion(preguntaDTO.getDescripcion());
@@ -87,7 +88,7 @@ public class PreguntaServiceImpl implements PreguntaService {
     @Override
     public void eliminarPregunta(Long id) {
         Pregunta pregunta = preguntaRepository.findById(id)
-                        .orElseThrow(()-> new RuntimeException("El id de la pregunta no fue encontrado"));
+                        .orElseThrow(()-> new ResourceNotFoundException("El id de la pregunta no fue encontrado"));
                 preguntaRepository.delete(pregunta);
     }
 }
