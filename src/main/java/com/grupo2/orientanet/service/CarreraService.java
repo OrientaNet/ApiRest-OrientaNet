@@ -1,18 +1,19 @@
 package com.grupo2.orientanet.service;
 
+import com.grupo2.orientanet.dto.CarreraDTO;
 import com.grupo2.orientanet.model.entity.Carrera;
 
 import java.util.List;
 
 public interface CarreraService {
 
-    Carrera crearCarrera(Carrera carrera);
+    CarreraDTO crearCarrera(CarreraDTO carreraDTO);
 
-    Carrera obtenerCarreraPorId(Long id);
+    CarreraDTO obtenerCarreraPorId(Long id);
 
-    List<Carrera> obtenerTodasLasCarreras();
+    List<CarreraDTO> obtenerTodasLasCarreras();
 
-    Carrera actualizarCarrera(Long id, Carrera carrera);
+    CarreraDTO actualizarCarrera(Long id, CarreraDTO carreraDTO) throws Exception;
 
     void eliminarCarrera(Long id);
 

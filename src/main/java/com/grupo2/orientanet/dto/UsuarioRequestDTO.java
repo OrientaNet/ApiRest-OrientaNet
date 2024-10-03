@@ -2,6 +2,8 @@ package com.grupo2.orientanet.dto;
 
 
 import com.grupo2.orientanet.model.enums.Role;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -36,7 +38,7 @@ public class UsuarioRequestDTO {
     @NotBlank(message = "El email debe ser obligatorio")
     private String email;
 
-    @NotBlank(message = "El rol es obligatorio")
+    @Enumerated(EnumType.STRING)
     private Role role;
 
 }

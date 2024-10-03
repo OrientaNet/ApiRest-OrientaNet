@@ -30,8 +30,8 @@ public class Experto {
     private String certificaciones;
 
     @ManyToOne
-    @JoinColumn(name = "especializacion_id", referencedColumnName = "id")
-    private Carrera especializacion;
+    @JoinColumn(name = "carrera_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_expertos_carreras"))
+    private Carrera carrera;
 
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_expertos_usuarios"))
@@ -40,4 +40,8 @@ public class Experto {
     @JsonIgnore
     @OneToMany(mappedBy = "experto")
     private List<RecursoEducativo> recursoEducativo;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "experto")
+    private List<SesionAsesoria> sesionAsesoria;
 }

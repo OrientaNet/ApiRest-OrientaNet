@@ -25,9 +25,8 @@ public class EstudianteDTO {
 
     private String intereses;
 
-    @NotBlank(message = "La carrera de interes debe ser obligatorio")
-    @Size(max = 50,message = "La carrera de interes debe tener 50 caracteres o menos")
-    private String carreraInteres;
+    @NotBlank(message = "La el id de la carrera de interes debe ser obligatorio")
+    private Long carreraInteres;
 
     @NotBlank(message = "El id del usuario debe ser obligatorio")
     private Long usuarioId;
