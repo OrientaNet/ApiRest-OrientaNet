@@ -22,10 +22,8 @@ public class ExpertoDTO {
 
     private String certificaciones;
 
-    @NotBlank(message = "El id de la carrera debe ser obligatoria")
     private Long carreraId;  // Solo el ID de Carrera (especialización)
 
-    @NotBlank(message = "El id del usuario debe ser obligatorio")
     private Long usuarioId;  // Solo el ID de Usuario
 
 }
