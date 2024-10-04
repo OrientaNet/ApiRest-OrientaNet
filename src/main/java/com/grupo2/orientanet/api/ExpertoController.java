@@ -1,6 +1,7 @@
 package com.grupo2.orientanet.api;
 
 import com.grupo2.orientanet.dto.ExpertoDTO;
+import com.grupo2.orientanet.dto.RecursoEducativoDTO;
 import com.grupo2.orientanet.model.entity.Experto;
 import com.grupo2.orientanet.service.ExpertoService;
 import jakarta.validation.Valid;
@@ -49,5 +50,11 @@ public class ExpertoController {
     public ResponseEntity<Void> deleteExperto(@PathVariable Long id) {
         expertoService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/{expertoId}/recursos-educativos")
+    public ResponseEntity<List<RecursoEducativoDTO>> obtenerRecursosEducativosPorExperto(@PathVariable Long expertoId) {
+        List<RecursoEducativoDTO> recursos = expertoService.obtenerRecursosEducativosPorExperto(expertoId);
+        return ResponseEntity.ok(recursos);
     }
 }
