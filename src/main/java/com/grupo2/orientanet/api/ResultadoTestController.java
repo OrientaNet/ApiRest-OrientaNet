@@ -1,7 +1,9 @@
 package com.grupo2.orientanet.api;
 
 import com.grupo2.orientanet.dto.ResultadoTestDTO;
+
 import com.grupo2.orientanet.model.entity.Carrera;
+
 import com.grupo2.orientanet.model.entity.ResultadoTest;
 import com.grupo2.orientanet.service.ResultadoTestService;
 import org.springframework.beans.factory.annotation.Autowired;

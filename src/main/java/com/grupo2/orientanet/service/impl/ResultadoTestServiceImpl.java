@@ -4,6 +4,7 @@ import com.grupo2.orientanet.dto.ResultadoTestDTO;
 import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.ResultadoTestMapper;
 import com.grupo2.orientanet.model.entity.Carrera;
+
 import com.grupo2.orientanet.model.entity.ResultadoTest;
 import com.grupo2.orientanet.repository.ResultadoTestRepository;
 import com.grupo2.orientanet.service.ResultadoTestService;
@@ -24,7 +25,6 @@ public class ResultadoTestServiceImpl implements ResultadoTestService {
     @Autowired
     private ResultadoTestMapper resultadoTestMapper;
 
-
     @Transactional(readOnly = true)
     public ResultadoTestDTO obtenerResultadoPorId(Long id) {
         ResultadoTest resultadoTest = resultadoTestRepository.findById(id)
@@ -44,5 +44,12 @@ public class ResultadoTestServiceImpl implements ResultadoTestService {
                 .max(Map.Entry.comparingByValue())
                 .map(Map.Entry::getKey)
                 .orElse(null); // Retornar null si no hay recomendaciones
+
+    @Transactional(readOnly = true)
+    public ResultadoTestDTO obtenerResultadoPorId(Long id) {
+        ResultadoTest resultadoTest = resultadoTestRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Resultado no encontrado"));
+        return resultadoTestMapper.toDTO(resultadoTest);
+
     }
 }

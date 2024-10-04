@@ -47,11 +47,13 @@ public class RecursoEducativoController {
     public ResponseEntity<Void> deleteRecurso(@PathVariable Long id) {
        recursoEducativoService.deleteById(id);
        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
     }
 
     @GetMapping("/recomendar/{carreraId}")
     public ResponseEntity<List<RecursoEducativoDTO>> recomendarRecursos(@PathVariable Long carreraId) {
         List<RecursoEducativoDTO> recursosRecomendados = recursoEducativoService.recomendarRecursosPorCarrera(carreraId);
         return ResponseEntity.ok(recursosRecomendados);
+
     }
 }
