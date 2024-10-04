@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.service;
 
+import com.grupo2.orientanet.dto.CarreraDTO;
 import com.grupo2.orientanet.dto.EstudianteDTO;
 import com.grupo2.orientanet.model.entity.Estudiante;
 import org.springframework.data.domain.Page;
@@ -15,4 +16,5 @@ public interface EstudianteService {
     EstudianteDTO update(Long id, EstudianteDTO estudianteDetails) throws Exception;
     void delete(Long id);
 
+    CarreraDTO getCarreraMayorInteres();
 }

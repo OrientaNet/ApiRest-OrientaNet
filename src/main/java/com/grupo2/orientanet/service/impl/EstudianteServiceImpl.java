@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.service.impl;
 
+import com.grupo2.orientanet.dto.CarreraDTO;
 import com.grupo2.orientanet.dto.EstudianteDTO;
 import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.EstudianteMapper;
@@ -89,6 +90,16 @@ public class EstudianteServiceImpl implements EstudianteService {
         Estudiante estudiante = estudianteRepository.findById(id)
                 .orElseThrow(()-> new ResourceNotFoundException("El id del estudiante no fue encontrado"));
         estudianteRepository.delete(estudiante);
+    }
+
+    @Transactional(readOnly = true)
+    public CarreraDTO getCarreraMayorInteres() {
+        List<CarreraDTO> carrerasConMasInteres = estudianteRepository.findCarreraConMasInteres();
+        if (!carrerasConMasInteres.isEmpty()) {
+            return carrerasConMasInteres.get(0); // La carrera con más estudiantes interesados
+        } else {
+            return null; // Si no hay datos
+        }
     }
 
 }

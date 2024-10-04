@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.api;
 
+import com.grupo2.orientanet.dto.CarreraDTO;
 import com.grupo2.orientanet.dto.EstudianteDTO;
 import com.grupo2.orientanet.model.entity.Estudiante;
 import com.grupo2.orientanet.service.EstudianteService;
@@ -53,4 +54,15 @@ public class EstudianteController {
         estudianteService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/carrera-mayor-interes")
+    public ResponseEntity<CarreraDTO> getCarreraMayorInteres() {
+        CarreraDTO carreraDTO = estudianteService.getCarreraMayorInteres();
+        if (carreraDTO != null) {
+            return ResponseEntity.ok(carreraDTO);
+        } else {
+            return ResponseEntity.noContent().build(); // En caso de que no haya estudiantes con carrera
+        }
+    }
+
 }
