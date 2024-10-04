@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SesionAsesoriaServiceImpl implements SesionAsesoriaService {
@@ -98,5 +99,18 @@ public class SesionAsesoriaServiceImpl implements SesionAsesoriaService {
         SesionAsesoria sesionAsesoria = sesionAsesoriaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Sesión de asesoría no encontrada"));
         sesionAsesoriaRepository.delete(sesionAsesoria);
+    }
+
+    @Override
+    public List<SesionAsesoriaDTO> findSesionesByExpertoId(Long expertoId) {
+        List<SesionAsesoria> sesiones = sesionAsesoriaRepository.findByExpertoId(expertoId);
+
+        if (sesiones.isEmpty()) {
+            throw new ResourceNotFoundException("No se encontraron asesorías para el experto con ID " + expertoId);
+        }
+
+        return sesiones.stream()
+                .map(sesionAsesoriaMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

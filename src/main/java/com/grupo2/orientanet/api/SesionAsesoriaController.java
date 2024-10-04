@@ -46,4 +46,10 @@ public class SesionAsesoriaController {
         sesionAsesoriaService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    @GetMapping("/experto/{expertoId}")
+    public ResponseEntity<List<SesionAsesoriaDTO>> getSesionesByExpertoId(@PathVariable Long expertoId) {
+        List<SesionAsesoriaDTO> sesiones = sesionAsesoriaService.findSesionesByExpertoId(expertoId);
+        return new ResponseEntity<>(sesiones, HttpStatus.OK);
+    }
 }

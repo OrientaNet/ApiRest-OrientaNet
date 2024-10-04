@@ -20,4 +20,6 @@ public interface SesionAsesoriaService {
 
 
     void delete(Long id);
+
+    List<SesionAsesoriaDTO> findSesionesByExpertoId(Long expertoId);
 }
