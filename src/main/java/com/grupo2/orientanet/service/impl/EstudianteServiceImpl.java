@@ -1,12 +1,19 @@
 package com.grupo2.orientanet.service.impl;
 
+import com.grupo2.orientanet.dto.EstudianteDTO;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
+import com.grupo2.orientanet.mapper.EstudianteMapper;
+import com.grupo2.orientanet.model.entity.Carrera;
 import com.grupo2.orientanet.model.entity.Estudiante;
+import com.grupo2.orientanet.model.entity.Experto;
+import com.grupo2.orientanet.model.entity.Usuario;
 import com.grupo2.orientanet.repository.EstudianteRepository;
 import com.grupo2.orientanet.service.EstudianteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,45 +22,73 @@ import java.util.Optional;
 public class EstudianteServiceImpl implements EstudianteService {
 
     private final EstudianteRepository estudianteRepository;
+    private final EstudianteMapper estudianteMapper;
 
     @Autowired
-    public EstudianteServiceImpl(EstudianteRepository estudianteRepository) {
+    public EstudianteServiceImpl(EstudianteRepository estudianteRepository, EstudianteMapper estudianteMapper) {
         this.estudianteRepository = estudianteRepository;
+        this.estudianteMapper = estudianteMapper;
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<Estudiante> findAll() {
-        return estudianteRepository.findAll();
+    public List<EstudianteDTO> findAll() {
+        List<Estudiante> estudiante = estudianteRepository.findAll();
+        return estudiante.stream().map(estudianteMapper::toDTO).toList();
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public Optional<Estudiante> findById(Long id) {
-        return estudianteRepository.findById(id);
+    public EstudianteDTO findById(Long id) {
+        Estudiante estudiante = estudianteRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Estudiante no encontrado"));
+        return estudianteMapper.toDTO(estudiante);
     }
 
+    @Transactional
     @Override
-    public Estudiante save(Estudiante estudiante) {
-        return estudianteRepository.save(estudiante);
+    public EstudianteDTO save(EstudianteDTO estudianteDTO) {
+        Estudiante estudiante = estudianteMapper.toEntity(estudianteDTO);
+        estudiante = estudianteRepository.save(estudiante);
+
+        return estudianteMapper.toDTO(estudiante);
     }
 
+    @Transactional
     @Override
-    public Estudiante update(Long id, Estudiante estudianteDetails) {
-        return estudianteRepository.findById(id)
-                .map(estudiante -> {
-                    estudiante.setInformacionPersonal(estudianteDetails.getInformacionPersonal());
-                    estudiante.setNivelAcademico(estudianteDetails.getNivelAcademico());
-                    estudiante.setInstitucion(estudianteDetails.getInstitucion());
-                    estudiante.setIntereses(estudianteDetails.getIntereses());
-                    estudiante.setCarreraInteres(estudianteDetails.getCarreraInteres());
-                    estudiante.setUsuario(estudianteDetails.getUsuario());
-                    return estudianteRepository.save(estudiante);
-                })
-                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado con id: " + id));
+    public EstudianteDTO update(Long id, EstudianteDTO estudianteDetails) throws Exception {
+
+        if (!estudianteRepository.existsById(id)) {
+            throw new Exception("El estudiante no existe");
+        }
+
+        Estudiante existingEstudiante = estudianteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("El estudiante con el id "+id+" no existe"));
+
+                    existingEstudiante.setInformacionPersonal(estudianteDetails.getInformacionPersonal());
+                    existingEstudiante.setNivelAcademico(estudianteDetails.getNivelAcademico());
+                    existingEstudiante.setInstitucion(estudianteDetails.getInstitucion());
+                    existingEstudiante.setIntereses(estudianteDetails.getIntereses());
+
+                    Carrera carrera = new Carrera();
+                    carrera.setId(estudianteDetails.getCarreraInteres());
+                    existingEstudiante.setCarreraInteres(carrera);
+
+                    Usuario usuario = new Usuario();
+                    usuario.setId(estudianteDetails.getUsuarioId());
+                    existingEstudiante.setUsuario(usuario);
+
+                    existingEstudiante = estudianteRepository.save(existingEstudiante);
+                    return estudianteMapper.toDTO(existingEstudiante);
+
     }
 
+    @Transactional
     @Override
-    public void deleteById(Long id) {
-        estudianteRepository.deleteById(id);
+    public void delete(Long id) {
+        Estudiante estudiante = estudianteRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("El id del estudiante no fue encontrado"));
+        estudianteRepository.delete(estudiante);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.api;
 
+import com.grupo2.orientanet.dto.EstudianteDTO;
 import com.grupo2.orientanet.model.entity.Estudiante;
 import com.grupo2.orientanet.service.EstudianteService;
 import jakarta.validation.Valid;
@@ -21,41 +22,35 @@ public class EstudianteController {
     private final EstudianteService estudianteService;
 
     @GetMapping
-    public ResponseEntity<List<Estudiante>> getAllEstudiantes() {
-        List<Estudiante> estudiantes = estudianteService.findAll();
+    public ResponseEntity<List<EstudianteDTO>> getAllEstudiantes() {
+        List<EstudianteDTO> estudiantes = estudianteService.findAll();
         return new ResponseEntity<>(estudiantes, HttpStatus.OK);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Estudiante> getEstudianteById(@PathVariable Long id) {
-        return estudianteService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<EstudianteDTO> getEstudianteById(@PathVariable Long id) {
+        EstudianteDTO estudianteDTO = estudianteService.findById(id);
+        return new ResponseEntity<>(estudianteDTO, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Estudiante> createEstudiante(@Valid @RequestBody Estudiante estudiante) {
-        Estudiante createdEstudiante = estudianteService.save(estudiante);
+    public ResponseEntity<EstudianteDTO> createEstudiante(@Valid @RequestBody EstudianteDTO estudianteDTO) {
+        EstudianteDTO createdEstudiante = estudianteService.save(estudianteDTO);
         return new ResponseEntity<>(createdEstudiante, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Estudiante> updateEstudiante(@PathVariable Long id, @Valid @RequestBody Estudiante estudianteDetails) {
-        try {
-            Estudiante updatedEstudiante = estudianteService.update(id, estudianteDetails);
-            return ResponseEntity.ok(updatedEstudiante);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<EstudianteDTO> updateEstudiante(@PathVariable Long id, @Valid @RequestBody EstudianteDTO estudianteDetails) throws Exception {
+
+            EstudianteDTO updatedEstudiante = estudianteService.update(id, estudianteDetails);
+            return new ResponseEntity<>(updatedEstudiante, HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteEstudiante(@PathVariable Long id) {
-        if (estudianteService.findById(id).isPresent()) {
-            estudianteService.deleteById(id);
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        estudianteService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

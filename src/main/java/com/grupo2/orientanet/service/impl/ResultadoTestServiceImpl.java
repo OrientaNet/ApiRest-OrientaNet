@@ -1,10 +1,14 @@
 package com.grupo2.orientanet.service.impl;
 
+import com.grupo2.orientanet.dto.ResultadoTestDTO;
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
+import com.grupo2.orientanet.mapper.ResultadoTestMapper;
 import com.grupo2.orientanet.model.entity.ResultadoTest;
 import com.grupo2.orientanet.repository.ResultadoTestRepository;
 import com.grupo2.orientanet.service.ResultadoTestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -13,10 +17,14 @@ public class ResultadoTestServiceImpl implements ResultadoTestService {
 
     @Autowired
     private ResultadoTestRepository resultadoTestRepository;
+    @Autowired
+    private ResultadoTestMapper resultadoTestMapper;
 
-    // Método para obtener un ResultadoTest por ID
-    public ResultadoTest obtenerResultadoPorId(Long id) {
-        Optional<ResultadoTest> resultadoTest = resultadoTestRepository.findById(id);
-        return resultadoTest.orElse(null);
+
+    @Transactional(readOnly = true)
+    public ResultadoTestDTO obtenerResultadoPorId(Long id) {
+        ResultadoTest resultadoTest = resultadoTestRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Resultado no encontrado"));
+        return resultadoTestMapper.toDTO(resultadoTest);
     }
 }

@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.api;
 
+import com.grupo2.orientanet.dto.ResultadoTestDTO;
 import com.grupo2.orientanet.model.entity.ResultadoTest;
 import com.grupo2.orientanet.service.ResultadoTestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,8 @@ public class ResultadoTestController  {
 
     // Método para obtener un resultado de test por su ID
     @GetMapping("/{id}")
-    public ResponseEntity<ResultadoTest> obtenerResultadoTest(@PathVariable Long id) {
-        ResultadoTest resultadoTest = resultadoTestService.obtenerResultadoPorId(id);
-
-        if (resultadoTest == null) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ResultadoTestDTO> obtenerResultadoTest(@PathVariable Long id) {
+        ResultadoTestDTO resultadoTest = resultadoTestService.obtenerResultadoPorId(id);
 
         return ResponseEntity.ok(resultadoTest);
     }
