@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class RecursoEducativoServiceImpl implements RecursoEducativoService {
@@ -57,5 +58,20 @@ public class RecursoEducativoServiceImpl implements RecursoEducativoService {
         recursoEducativoRepository.delete(recursoEducativo);
     }
 
+    public List<RecursoEducativoDTO> recomendarRecursosPorCarrera(Long carreraId) {
+        // Buscar recursos educativos por carrera
+        List<RecursoEducativo> recursos = recursoEducativoRepository.findByCarreraId(carreraId);
 
+        // Mapear los recursos educativos a DTOs
+        return recursos.stream()
+                .map(recurso -> new RecursoEducativoDTO(
+                        recurso.getId(),
+                        recurso.getNombre(),
+                        recurso.getDescripcion(),
+                        recurso.getRecurso(),
+                        recurso.getUrl(),
+                        recurso.getCarrera().getId(),
+                        recurso.getExperto().getId()))
+                .collect(Collectors.toList());
+    }
 }

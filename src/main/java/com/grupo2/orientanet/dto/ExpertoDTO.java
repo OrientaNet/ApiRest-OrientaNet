@@ -21,7 +21,7 @@ public class ExpertoDTO {
     private String experiencia;
 
     private String certificaciones;
-
+  
     private Long carreraId;  // Solo el ID de Carrera (especialización)
 
     private Long usuarioId;  // Solo el ID de Usuario

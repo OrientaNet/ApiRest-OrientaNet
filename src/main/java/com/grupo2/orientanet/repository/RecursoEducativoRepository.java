@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface RecursoEducativoRepository extends JpaRepository<RecursoEducativo, Long> {
 
-    List<RecursoEducativo> findByExpertoId(Long expertoId);
+
+    List<RecursoEducativo> findByCarreraId(Long carreraId);
 }
