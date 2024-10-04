@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.model.entity;
 
+import com.grupo2.orientanet.model.enums.EstadoPago;
 import com.grupo2.orientanet.model.enums.MetodoPago;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,10 @@ public class Pago {
     @Column(name = "metodo_pago")
     @Enumerated(EnumType.STRING)
     private MetodoPago metodoPago;
+
+    @Enumerated(EnumType.STRING) // Para manejar diferentes estados de pago
+    @Column(name = "estado_pago")
+    private EstadoPago estadoPago;
 
     @ManyToOne
     @JoinColumn(name = "estudiante_id")
