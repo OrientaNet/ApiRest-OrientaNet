@@ -12,4 +12,5 @@ public interface RecursoEducativoService {
     List<RecursoEducativoDTO> getAll();
     RecursoEducativoDTO getById(Long id);
     void deleteById(Long id);
+    List<RecursoEducativoDTO> recomendarRecursosPorCarrera(Long carreraId);
 }
