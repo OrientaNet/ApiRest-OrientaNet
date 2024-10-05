@@ -45,11 +45,6 @@ public class ResultadoTestServiceImpl implements ResultadoTestService {
                 .map(Map.Entry::getKey)
                 .orElse(null); // Retornar null si no hay recomendaciones
 
-    @Transactional(readOnly = true)
-    public ResultadoTestDTO obtenerResultadoPorId(Long id) {
-        ResultadoTest resultadoTest = resultadoTestRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Resultado no encontrado"));
-        return resultadoTestMapper.toDTO(resultadoTest);
-
     }
+
 }

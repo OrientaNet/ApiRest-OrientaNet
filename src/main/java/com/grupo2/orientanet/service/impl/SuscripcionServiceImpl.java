@@ -37,9 +37,6 @@ public class SuscripcionServiceImpl implements SuscripcionService {
     }
 
     @Autowired
-    private SuscripcionRepository suscripcionRepository;
-
-    @Autowired
     private PagoService pagoService;
 
     @Autowired
@@ -55,7 +52,8 @@ public class SuscripcionServiceImpl implements SuscripcionService {
         Suscripcion suscripcion = suscripcionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Suscripción no encontrada"));
         return suscripcionMapper.toDTO(suscripcion);
-      
+    }
+
     @Transactional
     @Override
     public Suscripcion suscribirEstudianteAPlan(Long estudianteId, Long planId, Double monto, MetodoPago metodoPago) {
