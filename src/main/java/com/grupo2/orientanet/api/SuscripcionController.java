@@ -1,13 +1,16 @@
 package com.grupo2.orientanet.api;
 
 import com.grupo2.orientanet.dto.SuscripcionDTO;
+import com.grupo2.orientanet.model.entity.Suscripcion;
+import com.grupo2.orientanet.model.enums.MetodoPago;
 import com.grupo2.orientanet.service.SuscripcionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/suscripciones")
+@RequestMapping("/suscripciones")
+
 public class SuscripcionController {
 
     @Autowired
@@ -17,5 +20,26 @@ public class SuscripcionController {
     public ResponseEntity<SuscripcionDTO> findById(@PathVariable Long id) {
         SuscripcionDTO suscripcionDTO = suscripcionService.findById(id); // Utiliza el metodo del servicio
         return ResponseEntity.ok(suscripcionDTO);
+
+    @PostMapping("/suscribir")
+    public ResponseEntity<Suscripcion> suscribirEstudianteAPlan(
+            @RequestParam Long estudianteId,
+            @RequestParam Long planId,
+            @RequestParam Double monto,
+            @RequestParam MetodoPago metodoPago) {
+
+        Suscripcion nuevaSuscripcion = suscripcionService.suscribirEstudianteAPlan(estudianteId, planId, monto, metodoPago);
+        return ResponseEntity.ok(nuevaSuscripcion);
+    }
+
+    @PutMapping("/renovar")
+    public ResponseEntity<Suscripcion> renovarSuscripcion(
+            @RequestParam Long suscripcionId,
+            @RequestParam Double monto,
+            @RequestParam MetodoPago metodoPago) {
+
+        Suscripcion suscripcionRenovada = suscripcionService.renovarSuscripcion(suscripcionId, monto, metodoPago);
+        return ResponseEntity.ok(suscripcionRenovada);
+
     }
 }
