@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.api;
 
+import com.grupo2.orientanet.dto.SuscripcionDTO;
 import com.grupo2.orientanet.model.entity.Suscripcion;
 import com.grupo2.orientanet.model.enums.MetodoPago;
 import com.grupo2.orientanet.service.SuscripcionService;
@@ -9,10 +10,16 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/suscripciones")
+
 public class SuscripcionController {
 
     @Autowired
     private SuscripcionService suscripcionService;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<SuscripcionDTO> findById(@PathVariable Long id) {
+        SuscripcionDTO suscripcionDTO = suscripcionService.findById(id); // Utiliza el metodo del servicio
+        return ResponseEntity.ok(suscripcionDTO);
 
     @PostMapping("/suscribir")
     public ResponseEntity<Suscripcion> suscribirEstudianteAPlan(
@@ -33,5 +40,6 @@ public class SuscripcionController {
 
         Suscripcion suscripcionRenovada = suscripcionService.renovarSuscripcion(suscripcionId, monto, metodoPago);
         return ResponseEntity.ok(suscripcionRenovada);
+
     }
 }
