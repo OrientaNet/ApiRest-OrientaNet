@@ -1,12 +1,19 @@
 package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.ExpertoDTO;
+
+import com.grupo2.orientanet.dto.RecursoEducativoDTO;
+
 import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.ExpertoMapper;
 import com.grupo2.orientanet.model.entity.Carrera;
 import com.grupo2.orientanet.model.entity.Experto;
+
+import com.grupo2.orientanet.model.entity.RecursoEducativo;
+
 import com.grupo2.orientanet.model.entity.Usuario;
 import com.grupo2.orientanet.repository.ExpertoRepository;
+import com.grupo2.orientanet.repository.RecursoEducativoRepository;
 import com.grupo2.orientanet.service.ExpertoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,10 +28,13 @@ public class ExpertoServiceImpl implements ExpertoService {
     private final ExpertoRepository expertoRepository;
     private final ExpertoMapper expertoMapper;
 
+    private final RecursoEducativoRepository recursoEducativoRepository;
+
     @Autowired
-    public ExpertoServiceImpl(ExpertoRepository expertoRepository, ExpertoMapper expertoMapper) {
+    public ExpertoServiceImpl(ExpertoRepository expertoRepository, ExpertoMapper expertoMapper, RecursoEducativoRepository recursoEducativoRepository) {
         this.expertoRepository = expertoRepository;
         this.expertoMapper = expertoMapper;
+        this.recursoEducativoRepository = recursoEducativoRepository;
     }
 
     @Transactional(readOnly = true)
@@ -56,7 +66,9 @@ public class ExpertoServiceImpl implements ExpertoService {
     public ExpertoDTO update(Long id, ExpertoDTO expertoDetails) throws Exception {
 
         if (!expertoRepository.existsById(id)) {
-            throw new Exception("El experto no existe");
+
+            throw new ResourceNotFoundException("El experto no existe");
+
         }
 
         Experto existingExperto = expertoRepository.findById(id)
@@ -77,7 +89,6 @@ public class ExpertoServiceImpl implements ExpertoService {
 
         existingExperto = expertoRepository.save(existingExperto);
                     return expertoMapper.toDTO(existingExperto);
-
     }
 
     @Transactional
@@ -85,6 +96,17 @@ public class ExpertoServiceImpl implements ExpertoService {
     public void delete(Long id) {
         Experto experto = expertoRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("El id del experto no fue encontrado"));
         expertoRepository.delete(experto);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<RecursoEducativoDTO> obtenerRecursosEducativosPorExperto(Long expertoId) {
+        // Usar el repositorio para obtener los recursos educativos del experto directamente
+        List<RecursoEducativo> recursosEducativos = recursoEducativoRepository.findByExpertoId(expertoId);
+
+        // Utilizar el mapper para convertir la lista de recursos educativos a DTOs
+        return expertoMapper.toRecursoEducativoDTOList(recursosEducativos);
+
     }
 }
 
