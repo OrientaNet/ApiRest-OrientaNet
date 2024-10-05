@@ -56,6 +56,7 @@ public class RecursoEducativoServiceImpl implements RecursoEducativoService {
         RecursoEducativo recursoEducativo = recursoEducativoRepository
                 .findById(id).orElseThrow(()-> new ResourceNotFoundException("el id del recurso educativo no fue encontrado"));
         recursoEducativoRepository.delete(recursoEducativo);
+
     }
 
     public List<RecursoEducativoDTO> recomendarRecursosPorCarrera(Long carreraId) {
@@ -73,5 +74,8 @@ public class RecursoEducativoServiceImpl implements RecursoEducativoService {
                         recurso.getCarrera().getId(),
                         recurso.getExperto().getId()))
                 .collect(Collectors.toList());
+
     }
+
+
 }

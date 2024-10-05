@@ -6,6 +6,7 @@ import com.grupo2.orientanet.dto.RecursoEducativoDTO;
 import com.grupo2.orientanet.model.entity.Carrera;
 import com.grupo2.orientanet.model.entity.Experto;
 import com.grupo2.orientanet.model.entity.RecursoEducativo;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,10 +31,10 @@ public class ExpertoMapper {
         return modelMapper.map(experto, ExpertoDTO.class);
 
     }
-
     public List<RecursoEducativoDTO> toRecursoEducativoDTOList(List<RecursoEducativo> recursosEducativos) {
         return recursosEducativos.stream()
                 .map(recurso -> modelMapper.map(recurso, RecursoEducativoDTO.class))
                 .collect(Collectors.toList());
     }
+
 }

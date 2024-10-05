@@ -23,6 +23,6 @@ public class ExpertoDTO {
     private String certificaciones;
 
     private Long carreraId;  // Solo el ID de Carrera (especialización)
-rivate Long usuarioId;  // Solo el ID de Usuario
+    private Long usuarioId;  // Solo el ID de Usuario
 
 }
