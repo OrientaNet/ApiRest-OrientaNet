@@ -1,5 +1,7 @@
 package com.grupo2.orientanet.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grupo2.orientanet.model.enums.EstadoPago;
 
 import com.grupo2.orientanet.model.enums.MetodoPago;
@@ -24,7 +26,7 @@ public class Pago {
     @Column(name = "monto", nullable = false)
     private Double monto;
 
-    @Column(name = "fecha_pago", nullable = false)
+    @Column(name = "fecha_pago")
     private LocalDate fechaPago;
 
     @Column(name = "metodo_pago")
@@ -41,6 +43,7 @@ public class Pago {
     private Estudiante estudiante;
 
     @ManyToOne
+    @JsonBackReference  // Parte inversa de la relación
     @JoinColumn(name = "suscripcion_id")
     private Suscripcion suscripcion;
 

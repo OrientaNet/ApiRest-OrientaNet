@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.grupo2.orientanet.model.enums.EstadoSuscripcion;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -39,6 +40,7 @@ public class Suscripcion {
     @JoinColumn(name = "plan_id", nullable = false)
     private Plan plan;
 
+    @JsonManagedReference  // Parte "dueña" de la relación
     @OneToMany(mappedBy = "suscripcion", cascade = CascadeType.ALL)
     private List<Pago> pagos;
 }

@@ -28,24 +28,24 @@ import java.time.LocalDate;
 public class SuscripcionServiceImpl implements SuscripcionService {
 
     private final SuscripcionRepository suscripcionRepository;
-    private final SuscripcionMapper suscripcionMapper; // Mapeador para convertir entre Suscripcion y SuscripcionDTO
+    private final SuscripcionMapper suscripcionMapper;
+    private final PagoService pagoService;
+    private final EstudianteRepository estudianteRepository;
+    private final PlanRepository planRepository;
 
     @Autowired
-    public SuscripcionServiceImpl(SuscripcionRepository suscripcionRepository, SuscripcionMapper suscripcionMapper) {
+    public SuscripcionServiceImpl(SuscripcionRepository suscripcionRepository,
+                                  SuscripcionMapper suscripcionMapper,
+                                  PagoService pagoService,
+                                  EstudianteRepository estudianteRepository,
+                                  PlanRepository planRepository) {
         this.suscripcionRepository = suscripcionRepository;
         this.suscripcionMapper = suscripcionMapper;
+        this.pagoService = pagoService;
+        this.estudianteRepository = estudianteRepository;
+        this.planRepository = planRepository;
     }
 
-    @Autowired
-    private PagoService pagoService;
-
-    @Autowired
-    private EstudianteRepository estudianteRepository;
-
-    @Autowired
-    private PlanRepository planRepository;
-
-  
     @Transactional(readOnly = true)
     @Override
     public SuscripcionDTO findById(Long id) {
@@ -59,7 +59,6 @@ public class SuscripcionServiceImpl implements SuscripcionService {
     public Suscripcion suscribirEstudianteAPlan(Long estudianteId, Long planId, Double monto, MetodoPago metodoPago) {
         Estudiante estudiante = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado"));
-
         Plan plan = planRepository.findById(planId)
                 .orElseThrow(() -> new ResourceNotFoundException("Plan no encontrado"));
 
@@ -68,11 +67,11 @@ public class SuscripcionServiceImpl implements SuscripcionService {
         nuevaSuscripcion.setPlan(plan);
         nuevaSuscripcion.setFechaInicio(LocalDate.now());
         nuevaSuscripcion.setFechaFin(LocalDate.now().plusDays(plan.getDuracionDias()));
-        nuevaSuscripcion.setEstadoSuscripcion(EstadoSuscripcion.ACTIVA);
+        nuevaSuscripcion.setEstadoSuscripcion(EstadoSuscripcion.PENDIENTE);
 
         nuevaSuscripcion = suscripcionRepository.save(nuevaSuscripcion);
 
-        pagoService.registrarPago(nuevaSuscripcion.getId(), monto, metodoPago);
+        pagoService.registrarPagoPendiente(nuevaSuscripcion.getId(), monto, metodoPago);
 
         return nuevaSuscripcion;
     }
@@ -84,9 +83,28 @@ public class SuscripcionServiceImpl implements SuscripcionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Suscripción no encontrada"));
 
         suscripcion.setFechaFin(suscripcion.getFechaFin().plusDays(suscripcion.getPlan().getDuracionDias()));
-        pagoService.registrarPago(suscripcionId, monto, metodoPago);
+
+        pagoService.registrarPagoPendiente(suscripcionId, monto, metodoPago);
 
         return suscripcionRepository.save(suscripcion);
+    }
 
+    @Transactional
+    @Override
+    public SuscripcionDTO confirmarPagoYSuscripcion(Long pagoId) {
+        Pago pago = pagoService.confirmarPago(pagoId);
+
+        Suscripcion suscripcion = pago.getSuscripcion();
+
+        if (suscripcion.getEstadoSuscripcion() == EstadoSuscripcion.PENDIENTE) {
+            suscripcion.setEstadoSuscripcion(EstadoSuscripcion.ACTIVA);
+            suscripcion.setFechaInicio(LocalDate.now());
+            suscripcion.setFechaFin(LocalDate.now().plusDays(suscripcion.getPlan().getDuracionDias()));
+            suscripcion = suscripcionRepository.save(suscripcion);
+        }
+
+        return suscripcionMapper.toDTO(suscripcion);
     }
 }
+
+

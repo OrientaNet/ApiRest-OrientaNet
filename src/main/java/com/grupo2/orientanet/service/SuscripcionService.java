@@ -8,5 +8,5 @@ public interface SuscripcionService {
     SuscripcionDTO findById(Long id);
     Suscripcion suscribirEstudianteAPlan(Long estudianteId, Long planId, Double monto, MetodoPago metodoPago);
     Suscripcion renovarSuscripcion(Long suscripcionId, Double monto, MetodoPago metodoPago);
-
+    SuscripcionDTO confirmarPagoYSuscripcion(Long pagoId);  // El método que mencionas
 }

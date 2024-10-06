@@ -4,5 +4,6 @@ public enum EstadoSuscripcion {
     ACTIVA,
     EXPIRADA,
     CANCELADA,
+    PENDIENTE,
     FREE
 }
