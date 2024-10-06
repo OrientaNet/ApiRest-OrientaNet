@@ -16,6 +16,8 @@ public class PagoController {
     @Autowired
     private PagoService pagoService;
 
+
+
     @PostMapping("/realizar")
     public ResponseEntity<Pago> realizarPago(
             @RequestParam Long suscripcionId,

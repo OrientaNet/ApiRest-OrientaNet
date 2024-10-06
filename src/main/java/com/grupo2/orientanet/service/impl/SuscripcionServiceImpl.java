@@ -58,10 +58,10 @@ public class SuscripcionServiceImpl implements SuscripcionService {
     @Override
     public Suscripcion suscribirEstudianteAPlan(Long estudianteId, Long planId, Double monto, MetodoPago metodoPago) {
         Estudiante estudiante = estudianteRepository.findById(estudianteId)
-                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado"));
 
         Plan plan = planRepository.findById(planId)
-                .orElseThrow(() -> new RuntimeException("Plan no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Plan no encontrado"));
 
         Suscripcion nuevaSuscripcion = new Suscripcion();
         nuevaSuscripcion.setEstudiante(estudiante);
@@ -81,7 +81,7 @@ public class SuscripcionServiceImpl implements SuscripcionService {
     @Override
     public Suscripcion renovarSuscripcion(Long suscripcionId, Double monto, MetodoPago metodoPago) {
         Suscripcion suscripcion = suscripcionRepository.findById(suscripcionId)
-                .orElseThrow(() -> new RuntimeException("Suscripción no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Suscripción no encontrada"));
 
         suscripcion.setFechaFin(suscripcion.getFechaFin().plusDays(suscripcion.getPlan().getDuracionDias()));
         pagoService.registrarPago(suscripcionId, monto, metodoPago);

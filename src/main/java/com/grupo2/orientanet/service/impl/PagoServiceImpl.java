@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.service.impl;
 
+import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.model.entity.Pago;
 import com.grupo2.orientanet.model.entity.Suscripcion;
 import com.grupo2.orientanet.model.enums.EstadoPago;
@@ -25,7 +26,7 @@ public class PagoServiceImpl implements PagoService {
     @Override
     public Pago registrarPago(Long suscripcionId, Double monto, MetodoPago metodoPago) {
         Suscripcion suscripcion = suscripcionRepository.findById(suscripcionId)
-                .orElseThrow(() -> new RuntimeException("Suscripción no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Suscripción no encontrada"));
 
         Pago nuevoPago = new Pago();
         nuevoPago.setSuscripcion(suscripcion);

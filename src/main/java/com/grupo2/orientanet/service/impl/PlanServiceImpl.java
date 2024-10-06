@@ -51,7 +51,7 @@ public class PlanServiceImpl implements PlanService {
     @Override
     public PlanDTO update(Long id, PlanDTO planDetails) throws Exception {
         if (!planRepository.existsById(id)) {
-            throw new Exception("El plan no existe");
+            throw new ResourceNotFoundException("El plan no existe");
         }
 
         Plan existingPlan = planRepository.findById(id)
