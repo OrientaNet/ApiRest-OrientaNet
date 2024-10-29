@@ -1,5 +1,7 @@
 package com.grupo2.orientanet.mapper;
 
+import com.grupo2.orientanet.dto.AuthResponseDTO;
+import com.grupo2.orientanet.dto.LoginDTO;
 import com.grupo2.orientanet.dto.UsuarioRequestDTO;
 import com.grupo2.orientanet.dto.UsuarioResponseDTO;
 import com.grupo2.orientanet.model.entity.Usuario;
@@ -36,4 +38,26 @@ public class UsuarioMapper {
         return  modelMapper.map(usuario, UsuarioResponseDTO.class);
 
     }
+
+    public Usuario toUserEntity (LoginDTO loginDTO){
+
+        return modelMapper.map(loginDTO, Usuario.class);
+
+    }
+
+    public AuthResponseDTO toAuthResponseDTO(Usuario usuario, String token){
+        AuthResponseDTO authResponseDTO = new AuthResponseDTO();
+        authResponseDTO.setToken(token);
+
+        String nombre = usuario.getNombre();
+        String apellido = usuario.getApellido();
+
+        authResponseDTO.setNombre(nombre);
+        authResponseDTO.setApellido(apellido);
+
+        authResponseDTO.setRole(usuario.getRole().name());
+
+        return authResponseDTO;
+    }
+
 }

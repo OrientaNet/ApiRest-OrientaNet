@@ -3,7 +3,6 @@ package com.grupo2.orientanet.service.impl;
 import com.grupo2.orientanet.dto.PagoDTO;
 import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.PagoMapper;
-import com.grupo2.orientanet.model.entity.Estudiante;
 import com.grupo2.orientanet.model.entity.Pago;
 import com.grupo2.orientanet.model.entity.Suscripcion;
 import com.grupo2.orientanet.model.enums.EstadoPago;
@@ -29,29 +28,20 @@ public class PagoServiceImpl implements PagoService {
 
     @Override
     public PagoDTO registrarPagoPendiente(Long suscripcionId, Double monto, MetodoPago metodoPago) {
-        // Encontrar la suscripción
         Suscripcion suscripcion = suscripcionRepository.findById(suscripcionId)
                 .orElseThrow(() -> new ResourceNotFoundException("Suscripción no encontrada"));
 
-        // Obtener el estudiante desde la suscripción
-        Estudiante estudiante = suscripcion.getEstudiante();
-
-        // Crear el nuevo pago
         Pago nuevoPago = new Pago();
         nuevoPago.setSuscripcion(suscripcion);
-        nuevoPago.setEstudiante(estudiante);  // Asignar el estudiante al pago
         nuevoPago.setMonto(monto);
         nuevoPago.setFechaPago(null);  // Fecha será null hasta que se confirme el pago
         nuevoPago.setMetodoPago(metodoPago);
         nuevoPago.setEstadoPago(EstadoPago.PENDIENTE);  // Estado inicial: PENDIENTE
 
-        // Guardar el pago
         Pago pagoGuardado = pagoRepository.save(nuevoPago);
 
-        // Devolver el pago en formato DTO
         return pagoMapper.toDTO(pagoGuardado);
     }
-
 
     @Override
     public List<PagoDTO> obtenerHistorialDePagos(Long estudianteId) {

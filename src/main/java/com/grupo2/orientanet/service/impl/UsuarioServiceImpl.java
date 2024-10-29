@@ -1,5 +1,7 @@
 package com.grupo2.orientanet.service.impl;
 
+import com.grupo2.orientanet.dto.AuthResponseDTO;
+import com.grupo2.orientanet.dto.LoginDTO;
 import com.grupo2.orientanet.dto.UsuarioRequestDTO;
 import com.grupo2.orientanet.dto.UsuarioResponseDTO;
 import com.grupo2.orientanet.exception.BadRequestException;
@@ -7,8 +9,13 @@ import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.UsuarioMapper;
 import com.grupo2.orientanet.model.entity.Usuario;
 import com.grupo2.orientanet.repository.UsuarioRepository;
+import com.grupo2.orientanet.security.UserPrincipal;
 import com.grupo2.orientanet.service.UsuarioService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,17 +24,15 @@ import java.util.List;
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
+    private final AuthenticationManager authenticationManager;
 
 
-    @Autowired
-    UsuarioServiceImpl(UsuarioRepository usuarioRepository, UsuarioMapper usuarioMapper) {
-        this.usuarioRepository = usuarioRepository;
-        this.usuarioMapper = usuarioMapper;
-    }
+
 
     @Transactional(readOnly = true)
     @Override
@@ -102,6 +107,29 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void delete(Long id) {
         Usuario usuario = usuarioRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("el id del usuario no fue encontrado"));
         usuarioRepository.delete(usuario);
+    }
+
+
+    @Override
+    public AuthResponseDTO login(LoginDTO loginDTO) {
+        //Autenticar al usuario utilizando autenticationManager
+
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getContrasena())
+        );
+
+        // Una vez autenticado contiene la informacion de usuario autenticado
+
+        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
+        Usuario usuario = userPrincipal.getUsuario();
+
+        String token = "toquenxd";
+
+        AuthResponseDTO responseDTO = usuarioMapper.toAuthResponseDTO(usuario, token);
+
+
+        return responseDTO;
     }
 }
 
