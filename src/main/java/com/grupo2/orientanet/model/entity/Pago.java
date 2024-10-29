@@ -24,7 +24,7 @@ public class Pago {
     @Column(name = "monto", nullable = false)
     private Double monto;
 
-    @Column(name = "fecha_pago", nullable = false)
+    @Column(name = "fecha_pago")
     private LocalDate fechaPago;
 
     @Column(name = "metodo_pago")
