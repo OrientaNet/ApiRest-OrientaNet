@@ -1,6 +1,7 @@
 package com.grupo2.orientanet.model.entity;
 
-import com.grupo2.orientanet.model.enums.Role;
+import com.grupo2.orientanet.exception.CustomErrorResponse;
+import com.grupo2.orientanet.model.entity.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,34 +19,19 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nombre", nullable = false)
-    private String nombre;
-
-    @Column(name = "apellido", nullable = false)
-    private String apellido;
-
     @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "contrasena", nullable = false)
     private String contrasena;
 
-    @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @Enumerated(EnumType.STRING)
+    @ManyToOne(fetch = FetchType.EAGER) //carga temprana
+    @JoinColumn(name="role_id", referencedColumnName = "id")
     private Role role;
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-    }
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Estudiante estudiante;
 
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Experto experto;
 }

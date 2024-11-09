@@ -16,11 +16,8 @@ import java.util.List;
 public class UserPrincipal implements UserDetails {
 
     private Long id;
-
     private String email;
-
     private String contrasena;
-
     private Collection<? extends GrantedAuthority> authorities;
 
     private Usuario usuario;

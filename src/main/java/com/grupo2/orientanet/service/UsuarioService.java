@@ -2,21 +2,28 @@ package com.grupo2.orientanet.service;
 
 import com.grupo2.orientanet.dto.AuthResponseDTO;
 import com.grupo2.orientanet.dto.LoginDTO;
-import com.grupo2.orientanet.dto.UsuarioRequestDTO;
-import com.grupo2.orientanet.dto.UsuarioResponseDTO;
-import com.grupo2.orientanet.model.entity.Usuario;
-
-import java.util.List;
+import com.grupo2.orientanet.dto.UsuarioRegistrationDTO;
+import com.grupo2.orientanet.dto.UsuarioProfileDTO;
 
 public interface UsuarioService {
 
-    List<UsuarioResponseDTO> getAll();
-    UsuarioRequestDTO create(UsuarioRequestDTO usuarioRequestDTO) throws Exception;
-    UsuarioResponseDTO getById(Long id);
-    UsuarioResponseDTO getByEmail(String email);
-    UsuarioRequestDTO update(Long id, UsuarioRequestDTO updateUsuarioRequestDTO) throws Exception;
-    void delete(Long id);
+//    List<UsuarioProfileDTO> getAll();
+//    UsuarioRegistrationDTO create(UsuarioRegistrationDTO usuarioRegistrationDTO) throws Exception;
+//    UsuarioProfileDTO getById(Long id);
+//    UsuarioProfileDTO getByEmail(String email);
+//    UsuarioRegistrationDTO update(Long id, UsuarioRegistrationDTO updateUsuarioRegistrationDTO) throws Exception;
+
+
+
+    UsuarioProfileDTO registerEstudiante(UsuarioRegistrationDTO usuarioRegistrationDTO);
+
+    UsuarioProfileDTO registerExperto(UsuarioRegistrationDTO usuarioRegistrationDTO);
 
     AuthResponseDTO login(LoginDTO loginDTO);
 
+    UsuarioProfileDTO updateUsuarioProfile(Long id, UsuarioProfileDTO usuarioProfileDTO);
+
+    UsuarioProfileDTO getUsusarioProfileById(Long id);
 }
+
+
