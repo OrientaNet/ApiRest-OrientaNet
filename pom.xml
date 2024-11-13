@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.grupo2</groupId>
-	<artifactId>orientanet</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>orientanet</name>
-	<description>proyecto web de orientacion vocacional para el estudiante </description>
+	<artifactId>orientanet-api</artifactId>
+	<version>0.0.1</version>
+	<name>orientanet-api</name>
+	<description>orientanet-api</description>
 	<url/>
 	<licenses>
 		<license/>
