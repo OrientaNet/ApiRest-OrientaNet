@@ -65,6 +65,7 @@ public class UsuarioMapper {
 
         authResponseDTO.setNombre(nombre);
         authResponseDTO.setApellido(apellido);
+        authResponseDTO.setId(usuario.getId());
         authResponseDTO.setRole(String.valueOf(usuario.getRole().getName()));
 
         return authResponseDTO;
