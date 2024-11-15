@@ -36,6 +36,7 @@ public class UsuarioMapper {
             usuarioProfileDTO.setInstitucion(usuario.getEstudiante().getInstitucion());
             usuarioProfileDTO.setIntereses(usuario.getEstudiante().getIntereses());
             usuarioProfileDTO.setCarreraInteres(usuario.getEstudiante().getCarreraInteres());
+            usuarioProfileDTO.setRole(usuario.getRole().getName());
         } if (usuario.getExperto() != null){
             usuarioProfileDTO.setNombre(usuario.getExperto().getNombre());
             usuarioProfileDTO.setApellido(usuario.getExperto().getApellido());
@@ -43,6 +44,7 @@ public class UsuarioMapper {
             usuarioProfileDTO.setExperiencia(usuario.getExperto().getExperiencia());
             usuarioProfileDTO.setCertificaciones(usuario.getExperto().getCertificaciones());
             usuarioProfileDTO.setCarrera(usuario.getExperto().getCarrera());
+            usuarioProfileDTO.setRole(usuario.getRole().getName());
         }
 
         return usuarioProfileDTO;
@@ -63,6 +65,7 @@ public class UsuarioMapper {
 
         authResponseDTO.setNombre(nombre);
         authResponseDTO.setApellido(apellido);
+        authResponseDTO.setRole(String.valueOf(usuario.getRole().getName()));
 
         return authResponseDTO;
     }
