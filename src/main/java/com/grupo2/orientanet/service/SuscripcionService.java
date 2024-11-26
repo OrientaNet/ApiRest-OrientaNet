@@ -10,3 +10,4 @@ public interface SuscripcionService {
     Suscripcion renovarSuscripcion(Long suscripcionId, Double monto, MetodoPago metodoPago);
     SuscripcionDTO confirmarPagoYSuscripcion(Long pagoId);  // El método que mencionas
 }
+

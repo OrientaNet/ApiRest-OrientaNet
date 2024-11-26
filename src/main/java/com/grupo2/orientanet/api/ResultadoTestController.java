@@ -6,6 +6,7 @@ import com.grupo2.orientanet.model.entity.Carrera;
 
 import com.grupo2.orientanet.model.entity.ResultadoTest;
 import com.grupo2.orientanet.service.ResultadoTestService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/resultadotest")
+@RequiredArgsConstructor
 public class ResultadoTestController  {
 
-    @Autowired
     private ResultadoTestService resultadoTestService;
 
     // Método para obtener un resultado de test por su ID

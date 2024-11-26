@@ -6,6 +6,7 @@ import com.grupo2.orientanet.mapper.SuscripcionMapper;
 import com.grupo2.orientanet.model.entity.Suscripcion;
 import com.grupo2.orientanet.repository.SuscripcionRepository;
 import com.grupo2.orientanet.service.SuscripcionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +26,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 @Service
+@RequiredArgsConstructor
 public class SuscripcionServiceImpl implements SuscripcionService {
+
 
     private final SuscripcionRepository suscripcionRepository;
     private final SuscripcionMapper suscripcionMapper;
@@ -33,18 +36,6 @@ public class SuscripcionServiceImpl implements SuscripcionService {
     private final EstudianteRepository estudianteRepository;
     private final PlanRepository planRepository;
 
-    @Autowired
-    public SuscripcionServiceImpl(SuscripcionRepository suscripcionRepository,
-                                  SuscripcionMapper suscripcionMapper,
-                                  PagoService pagoService,
-                                  EstudianteRepository estudianteRepository,
-                                  PlanRepository planRepository) {
-        this.suscripcionRepository = suscripcionRepository;
-        this.suscripcionMapper = suscripcionMapper;
-        this.pagoService = pagoService;
-        this.estudianteRepository = estudianteRepository;
-        this.planRepository = planRepository;
-    }
 
     @Transactional(readOnly = true)
     @Override

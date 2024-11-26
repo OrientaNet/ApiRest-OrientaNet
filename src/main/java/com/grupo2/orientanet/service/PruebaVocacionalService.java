@@ -1,6 +1,5 @@
 package com.grupo2.orientanet.service;
 
-import com.grupo2.orientanet.dto.PruebaVocacionalDTO;
 import com.grupo2.orientanet.model.entity.PruebaVocacional;
 import com.grupo2.orientanet.model.entity.ResultadoTest;
 
@@ -11,13 +10,13 @@ public interface PruebaVocacionalService {
 
     ResultadoTest realizarPrueba(Long pruebaId,Long estudianteId, Map<Long, Long> respuestasSeleccionadas);
 
-    PruebaVocacionalDTO crearPrueba(PruebaVocacionalDTO pruebaVocacionalDTO);
+    PruebaVocacional crearPrueba(PruebaVocacional pruebaVocacional);
 
-    PruebaVocacionalDTO obtenerPruebaPorId(Long id);
+    PruebaVocacional obtenerPruebaPorId(Long id);
 
-    List<PruebaVocacionalDTO> obtenerTodasLasPruebas();
+    List<PruebaVocacional> obtenerTodasLasPruebas();
 
-    PruebaVocacionalDTO actualizarPrueba(Long id, PruebaVocacionalDTO pruebaVocacionalDTO) throws Exception;
+    PruebaVocacional actualizarPrueba(Long id, PruebaVocacional pruebaVocacional);
 
     void eliminarPrueba(Long id);
 }
