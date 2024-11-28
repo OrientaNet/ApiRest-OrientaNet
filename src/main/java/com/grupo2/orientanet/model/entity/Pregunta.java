@@ -1,8 +1,6 @@
 package com.grupo2.orientanet.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,9 +22,7 @@ public class Pregunta {
 
 
     @Column(name = "pregunta_text", columnDefinition = "TEXT")
-    private String Descripcion;
-
-
+    private String descripcion;
 
     @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference

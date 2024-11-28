@@ -18,7 +18,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class RecursoEducativoController {
 
-    private RecursoEducativoService recursoEducativoService;
+    private final RecursoEducativoService recursoEducativoService;
 
     // Obtener todos los recursos educativos
     @GetMapping
