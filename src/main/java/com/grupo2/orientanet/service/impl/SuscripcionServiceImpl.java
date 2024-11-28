@@ -1,7 +1,9 @@
 package com.grupo2.orientanet.service.impl;
 
+import com.grupo2.orientanet.dto.PagoDTO;
 import com.grupo2.orientanet.dto.SuscripcionDTO;
 import com.grupo2.orientanet.exception.ResourceNotFoundException;
+import com.grupo2.orientanet.mapper.PagoMapper;
 import com.grupo2.orientanet.mapper.SuscripcionMapper;
 import com.grupo2.orientanet.model.entity.Suscripcion;
 import com.grupo2.orientanet.repository.SuscripcionRepository;
@@ -35,6 +37,7 @@ public class SuscripcionServiceImpl implements SuscripcionService {
     private final PagoService pagoService;
     private final EstudianteRepository estudianteRepository;
     private final PlanRepository planRepository;
+    private final PagoMapper pagoMapper;
 
 
     @Transactional(readOnly = true)
@@ -83,7 +86,8 @@ public class SuscripcionServiceImpl implements SuscripcionService {
     @Transactional
     @Override
     public SuscripcionDTO confirmarPagoYSuscripcion(Long pagoId) {
-        Pago pago = pagoService.confirmarPago(pagoId);
+        PagoDTO pagodto = pagoService.confirmarPago(pagoId);
+        Pago pago = pagoMapper.toEntity(pagodto);
 
         Suscripcion suscripcion = pago.getSuscripcion();
 

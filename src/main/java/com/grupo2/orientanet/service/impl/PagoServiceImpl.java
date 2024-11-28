@@ -11,7 +11,6 @@ import com.grupo2.orientanet.repository.PagoRepository;
 import com.grupo2.orientanet.repository.SuscripcionRepository;
 import com.grupo2.orientanet.service.PagoService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -50,7 +49,7 @@ public class PagoServiceImpl implements PagoService {
     }
 
     @Override
-    public Pago confirmarPago(Long pagoId) {
+    public PagoDTO confirmarPago(Long pagoId) {
         Pago pago = pagoRepository.findById(pagoId)
                 .orElseThrow(() -> new ResourceNotFoundException("Pago no encontrado"));
 
@@ -62,6 +61,7 @@ public class PagoServiceImpl implements PagoService {
         pago.setEstadoPago(EstadoPago.COMPLETADO);
         pago.setFechaPago(LocalDate.now());  // Fecha actual de pago
 
-        return pagoRepository.save(pago);
+        Pago pagoActualizado = pagoRepository.save(pago);
+        return pagoMapper.toDTO(pagoActualizado);
     }
 }

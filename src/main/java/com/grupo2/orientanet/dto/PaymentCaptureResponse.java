@@ -1,4 +1,9 @@
 package com.grupo2.orientanet.dto;
 
-public class PaymentCapture {
+import lombok.Data;
+
+@Data
+public class PaymentCaptureResponse {
+    private boolean completed;
+    private Long pagoId;
 }

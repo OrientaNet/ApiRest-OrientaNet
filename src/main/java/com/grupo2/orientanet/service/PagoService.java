@@ -1,7 +1,6 @@
 package com.grupo2.orientanet.service;
 
 import com.grupo2.orientanet.dto.PagoDTO;
-import com.grupo2.orientanet.model.entity.Pago;
 import com.grupo2.orientanet.model.enums.MetodoPago;
 
 import java.util.List;
@@ -11,6 +10,6 @@ public interface PagoService {
 
     List<PagoDTO> obtenerHistorialDePagos(Long estudianteId);
 
-    Pago confirmarPago(Long pagoId);
+    PagoDTO confirmarPago(Long pagoId);
 }
 
