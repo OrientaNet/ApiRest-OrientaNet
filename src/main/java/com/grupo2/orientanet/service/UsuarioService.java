@@ -5,9 +5,11 @@ import com.grupo2.orientanet.dto.LoginDTO;
 import com.grupo2.orientanet.dto.UsuarioRegistrationDTO;
 import com.grupo2.orientanet.dto.UsuarioProfileDTO;
 
+import java.util.List;
+
 public interface UsuarioService {
 
-//    List<UsuarioProfileDTO> getAll();
+    List<UsuarioProfileDTO> getAll();
 //    UsuarioRegistrationDTO create(UsuarioRegistrationDTO usuarioRegistrationDTO) throws Exception;
 //    UsuarioProfileDTO getById(Long id);
 //    UsuarioProfileDTO getByEmail(String email);

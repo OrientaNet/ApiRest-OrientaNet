@@ -50,7 +50,7 @@ public class SuscripcionServiceImpl implements SuscripcionService {
 
     @Transactional
     @Override
-    public Suscripcion suscribirEstudianteAPlan(Long estudianteId, Long planId, Double monto, MetodoPago metodoPago) {
+    public SuscripcionDTO suscribirEstudianteAPlan(Long estudianteId, Long planId, Double monto, MetodoPago metodoPago) {
         Estudiante estudiante = estudianteRepository.findById(estudianteId)
                 .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado"));
         Plan plan = planRepository.findById(planId)
@@ -63,12 +63,18 @@ public class SuscripcionServiceImpl implements SuscripcionService {
         nuevaSuscripcion.setFechaFin(LocalDate.now().plusDays(plan.getDuracionDias()));
         nuevaSuscripcion.setEstadoSuscripcion(EstadoSuscripcion.PENDIENTE);
 
-        nuevaSuscripcion = suscripcionRepository.save(nuevaSuscripcion);
+        nuevaSuscripcion.setEstudiante(estudiante);
+        nuevaSuscripcion.setPlan(plan);
 
-        pagoService.registrarPagoPendiente(nuevaSuscripcion.getId(), monto, metodoPago);
+        // Save the Suscripcion
+        Suscripcion savedSuscripcion = suscripcionRepository.save(nuevaSuscripcion);
 
-        return nuevaSuscripcion;
+        // Create and associate the Pago
+        pagoService.registrarPagoPendiente(savedSuscripcion.getId(), monto, metodoPago);
+
+        return suscripcionMapper.toDTO(savedSuscripcion);
     }
+
 
     @Transactional
     @Override
@@ -100,6 +106,11 @@ public class SuscripcionServiceImpl implements SuscripcionService {
 
         return suscripcionMapper.toDTO(suscripcion);
     }
+
+//    public List<Pago> getPagosBySuscripcion(Long suscripcionId) {
+//        return pagoRepository.findPagosBySuscripcionId(suscripcionId);
+//    }
+
 }
 
 

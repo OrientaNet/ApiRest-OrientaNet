@@ -6,18 +6,23 @@ import com.grupo2.orientanet.dto.PaymentOrderResponse;
 import com.grupo2.orientanet.integration.payment.paypal.dto.OrderCaptureResponse;
 import com.grupo2.orientanet.integration.payment.paypal.dto.OrderResponse;
 import com.grupo2.orientanet.integration.payment.paypal.service.PaypalService;
+import com.grupo2.orientanet.model.entity.Pago;
 import com.grupo2.orientanet.service.CheckoutService;
 import com.grupo2.orientanet.service.PagoService;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import static org.hibernate.loader.internal.AliasConstantsHelper.get;
 
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class CheckoutServiceImpl implements CheckoutService {
 
+    @Autowired
     private final PaypalService paypalService;
+    @Autowired
     private final PagoService pagoService;
 
     @Override

@@ -31,7 +31,6 @@ public class SuscripcionDTO {
     @NotNull(message = "El ID del plan no puede ser nulo")
     private Long planId;
 
-    // IDs en lugar de las entidades completas para los pagos relacionados
-    private List<Long> pagoIds;
+    private Double totalPagos; // Example of aggregated data
 
 }

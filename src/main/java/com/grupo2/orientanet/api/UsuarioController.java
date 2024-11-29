@@ -4,6 +4,7 @@ import com.grupo2.orientanet.dto.UsuarioRegistrationDTO;
 import com.grupo2.orientanet.dto.UsuarioProfileDTO;
 import com.grupo2.orientanet.service.UsuarioService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,18 +13,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/usuarios")
 
 public class UsuarioController {
 
-    @Autowired
-    private UsuarioService usuarioService;
 
-//    @GetMapping
-//    public ResponseEntity<List<UsuarioProfileDTO>> getAllUsuarios() {
-//        List<UsuarioProfileDTO> usuarios = usuarioService.getAll();
-//        return new ResponseEntity<>(usuarios, HttpStatus.OK);
-//    }
+    private final UsuarioService usuarioService;
+
+    @GetMapping
+    public ResponseEntity<List<UsuarioProfileDTO>> getAllUsuarios() {
+        List<UsuarioProfileDTO> usuarios = usuarioService.getAll();
+        return new ResponseEntity<>(usuarios, HttpStatus.OK);
+    }
 //
 //    @GetMapping("/{id}")
 //    public ResponseEntity<UsuarioProfileDTO> getUsuarioById(@PathVariable("id") Long id) {

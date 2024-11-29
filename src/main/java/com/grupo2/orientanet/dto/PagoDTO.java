@@ -24,11 +24,7 @@ public class PagoDTO {
     private LocalDate fechaPago;
 
     @NotNull(message = "El método de pago no puede ser nulo")
-    private MetodoPago metodoPago;
+    private String metodoPago;
 
-    @NotNull(message = "El ID del estudiante no puede ser nulo")
-    private Long estudianteId;
-
-    @NotNull(message = "El ID de la suscripción no puede ser nulo")
-    private Long suscripcionId;
+    private String estadoPago;
 }

@@ -72,7 +72,7 @@ public class PaypalService {
         orderRequest.setIntent("CAPTURE");
 
         Amount amount = new Amount();
-        amount.setCurrencyCode("PEN");
+        amount.setCurrencyCode("USD");
         amount.setValue(pago.getMonto().toString());
 
         PurchaseUnit purchaseUnit = new PurchaseUnit();

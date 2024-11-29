@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/checkout")
-@PreAuthorize("hasRole('CUSTOMER')")
+@PreAuthorize("hasRole('ESTUDIANTE')")
 public class CheckoutController {
 
     private final CheckoutService checkoutService;

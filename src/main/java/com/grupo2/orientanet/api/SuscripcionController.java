@@ -6,9 +6,11 @@ import com.grupo2.orientanet.model.enums.MetodoPago;
 import com.grupo2.orientanet.service.SuscripcionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@PreAuthorize("hasRole('ESTUDIANTE')")
 @RequestMapping("/suscripciones")
 
 public class SuscripcionController {
@@ -23,13 +25,13 @@ public class SuscripcionController {
         }
 
         @PostMapping("/suscribir")
-        public ResponseEntity<Suscripcion> suscribirEstudianteAPlan(
+        public ResponseEntity<SuscripcionDTO> suscribirEstudianteAPlan(
                 @RequestParam Long estudianteId,
                 @RequestParam Long planId,
                 @RequestParam Double monto,
                 @RequestParam MetodoPago metodoPago) {
 
-            Suscripcion nuevaSuscripcion = suscripcionService.suscribirEstudianteAPlan(estudianteId, planId, monto, metodoPago);
+            SuscripcionDTO nuevaSuscripcion = suscripcionService.suscribirEstudianteAPlan(estudianteId, planId, monto, metodoPago);
             return ResponseEntity.ok(nuevaSuscripcion);
         }
 

@@ -31,12 +31,11 @@ public class PagoServiceImpl implements PagoService {
                 .orElseThrow(() -> new ResourceNotFoundException("Suscripción no encontrada"));
 
         Pago nuevoPago = new Pago();
-        nuevoPago.setSuscripcion(suscripcion);
         nuevoPago.setMonto(monto);
-        nuevoPago.setFechaPago(null);  // Fecha será null hasta que se confirme el pago
+        nuevoPago.setFechaPago(LocalDate.now());  // Fecha será null hasta que se confirme el pago
         nuevoPago.setMetodoPago(metodoPago);
         nuevoPago.setEstadoPago(EstadoPago.PENDIENTE);  // Estado inicial: PENDIENTE
-
+        nuevoPago.setSuscripcion(suscripcion);
         Pago pagoGuardado = pagoRepository.save(nuevoPago);
 
         return pagoMapper.toDTO(pagoGuardado);
@@ -44,8 +43,9 @@ public class PagoServiceImpl implements PagoService {
 
     @Override
     public List<PagoDTO> obtenerHistorialDePagos(Long estudianteId) {
-        List<Pago> pagos = pagoRepository.findByEstudianteId(estudianteId);
-        return pagos.stream().map(pagoMapper::toDTO).collect(Collectors.toList());
+//        List<Pago> pagos = pagoRepository.findByEstudianteId(estudianteId);
+//        return pagos.stream().map(pagoMapper::toDTO).collect(Collectors.toList());
+        return null;
     }
 
     @Override

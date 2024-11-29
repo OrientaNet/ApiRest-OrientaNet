@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.grupo2.orientanet.exception.CustomErrorResponse;
 import com.grupo2.orientanet.model.entity.Role;
 import jakarta.persistence.*;
@@ -30,6 +31,7 @@ public class Usuario {
     private Role role;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonBackReference
     private Estudiante estudiante;
 
     @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

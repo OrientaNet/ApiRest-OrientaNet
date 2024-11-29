@@ -27,6 +27,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +43,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final AuthenticationManager authenticationManager;
     private final TokenProvider tokenProvider;
+
+
+    @Override
+    public List<UsuarioProfileDTO> getAll() {
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        List<UsuarioProfileDTO> usuariosProfile = usuarios.stream().map(usuario -> usuarioMapper.toUsuarioProfileDTO(usuario)).collect(Collectors.toList());
+        return usuariosProfile;
+    }
 
     @Override
     public UsuarioProfileDTO registerEstudiante(UsuarioRegistrationDTO usuarioRegistrationDTO) {

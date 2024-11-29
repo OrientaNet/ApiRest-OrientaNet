@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class ResultadoTestController  {
 
-    private ResultadoTestService resultadoTestService;
+    private final ResultadoTestService resultadoTestService;
 
     // Método para obtener un resultado de test por su ID
     @GetMapping("/{id}")

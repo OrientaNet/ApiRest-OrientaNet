@@ -28,6 +28,7 @@ public class Estudiante  {
 
     @OneToOne
     @JoinColumn(name = "usuario_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_estudiantes_usuarios"))
+    @JsonManagedReference
     private Usuario usuario;
 
     @Column(name = "informacion_personal", columnDefinition = "TEXT")
@@ -55,6 +56,7 @@ public class Estudiante  {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 
 
 
