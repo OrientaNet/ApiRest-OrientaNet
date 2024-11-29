@@ -58,9 +58,7 @@ public class PruebaVocacionalController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-
     // Endpoint para realizar la prueba vocacional
-    @PreAuthorize("hasRole('ESTUDIANTE')")
     @PostMapping("/{estudianteId}/realizar/{pruebaId}")
     public ResponseEntity<ResultadoTest> realizarPrueba(
             @PathVariable Long pruebaId,
