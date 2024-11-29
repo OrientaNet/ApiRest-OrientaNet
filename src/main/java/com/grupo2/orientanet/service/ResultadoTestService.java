@@ -12,5 +12,5 @@ public interface ResultadoTestService {
 
     Carrera obtenerCarreraMasRecomendada();
 
-    ResultadoTestDTO obtenerPorEstudianteId(Long estudianteId);
+    ResultadoTestDTO obtenerPorUsuarioId(Long estudianteId);
 }

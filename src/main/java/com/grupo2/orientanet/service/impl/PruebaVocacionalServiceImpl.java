@@ -4,6 +4,7 @@ import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.model.entity.*;
 import com.grupo2.orientanet.repository.*;
 import com.grupo2.orientanet.service.PruebaVocacionalService;
+import com.grupo2.orientanet.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,7 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
     private final CarreraRepository carreraRepository;
     private final ResultadoTestRepository resultadoTestRepository;
     private final RespuestaRepository respuestaRepository;
-
+    private final UsuarioRepository usuarioRepository;
 
 
     @Override
@@ -72,8 +73,10 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
                 .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
 
 
-        Estudiante estudiante = estudianteRepository.findById(estudianteId)
-                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
+        Usuario usuario = usuarioRepository.findById(estudianteId)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        Estudiante estudiante = usuario.getEstudiante();
 
         // Mapa para contar los puntos de cada carrera
         Map<Long, Integer> contadorCarreras = new HashMap<>();

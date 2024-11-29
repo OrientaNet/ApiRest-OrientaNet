@@ -37,8 +37,8 @@ public class ResultadoTestController  {
     }
 
     @GetMapping("buscarPorUsuario/{id}")
-    public ResponseEntity<ResultadoTestDTO> obtenerResultadoTestPorEstudianteId(@PathVariable Long id) {
-        ResultadoTestDTO resultadoTest = resultadoTestService.obtenerPorEstudianteId(id);
+    public ResponseEntity<ResultadoTestDTO> obtenerResultadoTestPorUsuarioId(@PathVariable Long id) {
+        ResultadoTestDTO resultadoTest = resultadoTestService.obtenerPorUsuarioId(id);
         return ResponseEntity.ok(resultadoTest);
     }
 }

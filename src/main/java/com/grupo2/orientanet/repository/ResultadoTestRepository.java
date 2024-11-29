@@ -13,5 +13,5 @@ public interface ResultadoTestRepository extends JpaRepository<ResultadoTest, Lo
 
     List<ResultadoTest> findAll();
 
-    Optional<ResultadoTest> findByEstudianteId(Long estudianteId);
+    Optional<ResultadoTest> findByUsuarioId(Long estudianteId);
 }

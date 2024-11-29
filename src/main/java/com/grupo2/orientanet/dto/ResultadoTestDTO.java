@@ -21,4 +21,6 @@ public class ResultadoTestDTO {
     private Long carreraId;
 
     private Long estudianteId;
+
+    private Long usuarioId;
 }
