@@ -113,7 +113,7 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         // Crear el resultado del test
         ResultadoTest resultado = new ResultadoTest();
         resultado.setPruebaNombre(prueba.getNombre());  // Asignar la prueba vocacional
-        resultado.setEstudianteId(estudiante.getId());
+        resultado.setEstudiante(estudiante);
         resultado.setCarrera(carreraRecomendada);
         resultado.setRecomendacion("La carrera recomendada es: " + carreraRecomendada.getNombre());
         estudiante.setResultadoTest(resultado);

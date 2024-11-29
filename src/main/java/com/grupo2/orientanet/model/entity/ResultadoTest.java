@@ -38,7 +38,4 @@ public class ResultadoTest {
     @OneToOne
     @JoinColumn(name = "estudiante_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_prueba_vocacional_estudiantes"))
     private Estudiante estudiante;
-
-    @Column(name = "id_estudiante")
-    private Long estudianteId;
 }

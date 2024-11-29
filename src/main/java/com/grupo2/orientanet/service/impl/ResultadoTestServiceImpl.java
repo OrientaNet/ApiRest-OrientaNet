@@ -47,4 +47,11 @@ public class ResultadoTestServiceImpl implements ResultadoTestService {
 
     }
 
+    @Override
+    public ResultadoTestDTO obtenerPorEstudianteId(Long estudianteId) {
+        ResultadoTest resultadoTest = resultadoTestRepository.findByEstudianteId(estudianteId)
+                .orElseThrow(() -> new ResourceNotFoundException("Resultado no encontrado"));
+        return resultadoTestMapper.toDTO(resultadoTest);
+    }
+
 }
