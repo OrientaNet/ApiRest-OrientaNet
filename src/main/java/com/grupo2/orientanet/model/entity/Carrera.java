@@ -7,6 +7,7 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "carreras")
 public class Carrera {
 
     @Id

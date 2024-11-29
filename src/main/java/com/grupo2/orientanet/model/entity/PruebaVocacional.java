@@ -1,5 +1,6 @@
 package com.grupo2.orientanet.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,13 @@ public class PruebaVocacional {
     private List<Pregunta> preguntas;
 
 
+    public void addPregunta(Pregunta pregunta) {
+        this.preguntas.add(pregunta);
+        pregunta.setPruebaVocacional(this);
+    }
 
-
+    public void removePregunta(Pregunta pregunta) {
+        this.preguntas.remove(pregunta);
+        pregunta.setPruebaVocacional(null);
+    }
 }

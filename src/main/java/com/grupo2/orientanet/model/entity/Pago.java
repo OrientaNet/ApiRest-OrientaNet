@@ -1,5 +1,7 @@
 package com.grupo2.orientanet.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.grupo2.orientanet.model.enums.EstadoPago;
 
 import com.grupo2.orientanet.model.enums.MetodoPago;
@@ -27,22 +29,19 @@ public class Pago {
     @Column(name = "fecha_pago", nullable = false)
     private LocalDate fechaPago;
 
-    @Column(name = "metodo_pago")
     @Enumerated(EnumType.STRING)
+    @Column(name = "metodo_pago", nullable = false)
     private MetodoPago metodoPago;
 
-    @Enumerated(EnumType.STRING) // Para manejar diferentes estados de pago
-    @Column(name = "estado_pago")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado_pago", nullable = false)
     private EstadoPago estadoPago;
 
-
+    // Associate the payment with a subscription
     @ManyToOne
-    @JoinColumn(name = "estudiante_id")
-    private Estudiante estudiante;
-
-    @ManyToOne
-    @JoinColumn(name = "suscripcion_id")
+    @JoinColumn(name = "suscripcion_id", nullable = false)
     private Suscripcion suscripcion;
 
-    // Getters y Setters
+    // Getters and Setters (optional if you're not relying solely on @Data)
 }
+

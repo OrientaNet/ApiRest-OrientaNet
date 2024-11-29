@@ -9,4 +9,6 @@ public interface RecursoEducativoRepository extends JpaRepository<RecursoEducati
 
 
     List<RecursoEducativo> findByCarreraId(Long carreraId);
+
+    List<RecursoEducativo> findByExpertoId(Long expertoId);
 }

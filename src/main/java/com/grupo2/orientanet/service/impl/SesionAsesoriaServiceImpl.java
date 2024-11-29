@@ -10,6 +10,7 @@ import com.grupo2.orientanet.repository.CarreraRepository;
 import com.grupo2.orientanet.repository.ExpertoRepository;
 import com.grupo2.orientanet.repository.SesionAsesoriaRepository;
 import com.grupo2.orientanet.service.SesionAsesoriaService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,23 +19,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class SesionAsesoriaServiceImpl implements SesionAsesoriaService {
 
     private final SesionAsesoriaRepository sesionAsesoriaRepository;
     private final CarreraRepository carreraRepository;
     private final ExpertoRepository expertoRepository;
     private final SesionAsesoriaMapper sesionAsesoriaMapper;
-
-    @Autowired
-    public SesionAsesoriaServiceImpl(SesionAsesoriaRepository sesionAsesoriaRepository,
-                                     CarreraRepository carreraRepository,
-                                     ExpertoRepository expertoRepository,
-                                     SesionAsesoriaMapper sesionAsesoriaMapper) {
-        this.sesionAsesoriaRepository = sesionAsesoriaRepository;
-        this.carreraRepository = carreraRepository;
-        this.expertoRepository = expertoRepository;
-        this.sesionAsesoriaMapper = sesionAsesoriaMapper;
-    }
 
     @Transactional(readOnly = true)
     @Override

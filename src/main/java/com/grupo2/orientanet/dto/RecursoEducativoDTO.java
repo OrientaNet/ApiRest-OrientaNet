@@ -1,6 +1,6 @@
 package com.grupo2.orientanet.dto;
 
-import com.grupo2.orientanet.model.enums.Recurso;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ public class RecursoEducativoDTO {
     @Size(max = 50,message = "El nombre debe tener 50 caracteres o menos")
     private String nombre;
     private String descripcion;
-    private Recurso recurso;
+    private String recurso;
     @NotBlank(message = "El url debe ser obligatorio")
     private String url;
     private Long carreraId;

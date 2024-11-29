@@ -1,11 +1,14 @@
 package com.grupo2.orientanet.service.impl;
 
+import com.grupo2.orientanet.dto.PagoDTO;
 import com.grupo2.orientanet.dto.SuscripcionDTO;
 import com.grupo2.orientanet.exception.ResourceNotFoundException;
+import com.grupo2.orientanet.mapper.PagoMapper;
 import com.grupo2.orientanet.mapper.SuscripcionMapper;
 import com.grupo2.orientanet.model.entity.Suscripcion;
 import com.grupo2.orientanet.repository.SuscripcionRepository;
 import com.grupo2.orientanet.service.SuscripcionService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,70 +28,89 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 @Service
+@RequiredArgsConstructor
 public class SuscripcionServiceImpl implements SuscripcionService {
 
+
     private final SuscripcionRepository suscripcionRepository;
-    private final SuscripcionMapper suscripcionMapper; // Mapeador para convertir entre Suscripcion y SuscripcionDTO
+    private final SuscripcionMapper suscripcionMapper;
+    private final PagoService pagoService;
+    private final EstudianteRepository estudianteRepository;
+    private final PlanRepository planRepository;
+    private final PagoMapper pagoMapper;
 
-    @Autowired
-    public SuscripcionServiceImpl(SuscripcionRepository suscripcionRepository, SuscripcionMapper suscripcionMapper) {
-        this.suscripcionRepository = suscripcionRepository;
-        this.suscripcionMapper = suscripcionMapper;
-    }
 
-    @Autowired
-    private SuscripcionRepository suscripcionRepository;
-
-    @Autowired
-    private PagoService pagoService;
-
-    @Autowired
-    private EstudianteRepository estudianteRepository;
-
-    @Autowired
-    private PlanRepository planRepository;
-
-  
     @Transactional(readOnly = true)
     @Override
     public SuscripcionDTO findById(Long id) {
         Suscripcion suscripcion = suscripcionRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Suscripción no encontrada"));
         return suscripcionMapper.toDTO(suscripcion);
-      
+    }
+
     @Transactional
     @Override
-    public Suscripcion suscribirEstudianteAPlan(Long estudianteId, Long planId, Double monto, MetodoPago metodoPago) {
+    public SuscripcionDTO suscribirEstudianteAPlan(Long estudianteId, Long planId, Double monto, MetodoPago metodoPago) {
         Estudiante estudiante = estudianteRepository.findById(estudianteId)
-                .orElseThrow(() -> new RuntimeException("Estudiante no encontrado"));
-
+                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado"));
         Plan plan = planRepository.findById(planId)
-                .orElseThrow(() -> new RuntimeException("Plan no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Plan no encontrado"));
 
         Suscripcion nuevaSuscripcion = new Suscripcion();
         nuevaSuscripcion.setEstudiante(estudiante);
         nuevaSuscripcion.setPlan(plan);
         nuevaSuscripcion.setFechaInicio(LocalDate.now());
         nuevaSuscripcion.setFechaFin(LocalDate.now().plusDays(plan.getDuracionDias()));
-        nuevaSuscripcion.setEstadoSuscripcion(EstadoSuscripcion.ACTIVA);
+        nuevaSuscripcion.setEstadoSuscripcion(EstadoSuscripcion.PENDIENTE);
 
-        nuevaSuscripcion = suscripcionRepository.save(nuevaSuscripcion);
+        nuevaSuscripcion.setEstudiante(estudiante);
+        nuevaSuscripcion.setPlan(plan);
 
-        pagoService.registrarPago(nuevaSuscripcion.getId(), monto, metodoPago);
+        // Save the Suscripcion
+        Suscripcion savedSuscripcion = suscripcionRepository.save(nuevaSuscripcion);
 
-        return nuevaSuscripcion;
+        // Create and associate the Pago
+        pagoService.registrarPagoPendiente(savedSuscripcion.getId(), monto, metodoPago);
+
+        return suscripcionMapper.toDTO(savedSuscripcion);
     }
+
 
     @Transactional
     @Override
     public Suscripcion renovarSuscripcion(Long suscripcionId, Double monto, MetodoPago metodoPago) {
         Suscripcion suscripcion = suscripcionRepository.findById(suscripcionId)
-                .orElseThrow(() -> new RuntimeException("Suscripción no encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Suscripción no encontrada"));
 
         suscripcion.setFechaFin(suscripcion.getFechaFin().plusDays(suscripcion.getPlan().getDuracionDias()));
-        pagoService.registrarPago(suscripcionId, monto, metodoPago);
+
+        pagoService.registrarPagoPendiente(suscripcionId, monto, metodoPago);
 
         return suscripcionRepository.save(suscripcion);
-
     }
+
+    @Transactional
+    @Override
+    public SuscripcionDTO confirmarPagoYSuscripcion(Long pagoId) {
+        PagoDTO pagodto = pagoService.confirmarPago(pagoId);
+        Pago pago = pagoMapper.toEntity(pagodto);
+
+        Suscripcion suscripcion = pago.getSuscripcion();
+
+        if (suscripcion.getEstadoSuscripcion() == EstadoSuscripcion.PENDIENTE) {
+            suscripcion.setEstadoSuscripcion(EstadoSuscripcion.ACTIVA);
+            suscripcion.setFechaInicio(LocalDate.now());
+            suscripcion.setFechaFin(LocalDate.now().plusDays(suscripcion.getPlan().getDuracionDias()));
+            suscripcion = suscripcionRepository.save(suscripcion);
+        }
+
+        return suscripcionMapper.toDTO(suscripcion);
+    }
+
+//    public List<Pago> getPagosBySuscripcion(Long suscripcionId) {
+//        return pagoRepository.findPagosBySuscripcionId(suscripcionId);
+//    }
+
 }
+
+

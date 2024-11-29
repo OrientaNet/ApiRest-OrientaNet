@@ -1,6 +1,5 @@
 package com.grupo2.orientanet.api;
 
-import com.grupo2.orientanet.dto.PruebaVocacionalDTO;
 import com.grupo2.orientanet.model.entity.PruebaVocacional;
 import com.grupo2.orientanet.model.entity.ResultadoTest;
 import com.grupo2.orientanet.service.PruebaVocacionalService;
@@ -23,31 +22,31 @@ public class PruebaVocacionalController {
 
     // Crear una nueva prueba vocacional
     @PostMapping
-    public ResponseEntity<PruebaVocacionalDTO> crearPrueba(@Valid @RequestBody PruebaVocacionalDTO pruebaVocacionalDTO) {
-        PruebaVocacionalDTO nuevaPrueba = pruebaVocacionalService.crearPrueba(pruebaVocacionalDTO);
+    public ResponseEntity<PruebaVocacional> crearPrueba(@Valid @RequestBody PruebaVocacional pruebaVocacional) {
+        PruebaVocacional nuevaPrueba = pruebaVocacionalService.crearPrueba(pruebaVocacional);
         return ResponseEntity.ok(nuevaPrueba);
     }
 
     // Obtener una prueba vocacional por ID
     @GetMapping("/{id}")
-    public ResponseEntity<PruebaVocacionalDTO> obtenerPrueba(@PathVariable Long id) {
-        PruebaVocacionalDTO prueba = pruebaVocacionalService.obtenerPruebaPorId(id);
+    public ResponseEntity<PruebaVocacional> obtenerPrueba(@PathVariable Long id) {
+        PruebaVocacional prueba = pruebaVocacionalService.obtenerPruebaPorId(id);
         return new ResponseEntity<>(prueba, HttpStatus.OK);
     }
 
     // Obtener todas las pruebas vocacionales
     @GetMapping
-    public ResponseEntity<List<PruebaVocacionalDTO>> obtenerTodasLasPruebas() {
-        List<PruebaVocacionalDTO> pruebas = pruebaVocacionalService.obtenerTodasLasPruebas();
+    public ResponseEntity<List<PruebaVocacional>> obtenerTodasLasPruebas() {
+        List<PruebaVocacional> pruebas = pruebaVocacionalService.obtenerTodasLasPruebas();
         return new ResponseEntity<>(pruebas, HttpStatus.OK);
     }
 
     // Actualizar una prueba vocacional
     @PutMapping("/{id}")
-    public ResponseEntity<PruebaVocacionalDTO> actualizarPrueba(
+    public ResponseEntity<PruebaVocacional> actualizarPrueba(
             @PathVariable Long id,
-            @Valid @RequestBody PruebaVocacionalDTO pruebaVocacionalDTO) throws Exception {
-        PruebaVocacionalDTO pruebaActualizada = pruebaVocacionalService.actualizarPrueba(id, pruebaVocacionalDTO);
+            @Valid @RequestBody PruebaVocacional pruebaVocacional) throws Exception {
+        PruebaVocacional pruebaActualizada = pruebaVocacionalService.actualizarPrueba(id, pruebaVocacional);
         return new ResponseEntity<>(pruebaActualizada, HttpStatus.OK);
     }
 

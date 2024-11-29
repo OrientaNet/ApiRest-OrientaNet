@@ -4,6 +4,7 @@ import com.grupo2.orientanet.dto.RecursoEducativoDTO;
 import com.grupo2.orientanet.model.entity.RecursoEducativo;
 import com.grupo2.orientanet.service.RecursoEducativoService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/recursos")
+@RequiredArgsConstructor
 public class RecursoEducativoController {
 
-    @Autowired
-    private RecursoEducativoService recursoEducativoService;
+    private final RecursoEducativoService recursoEducativoService;
 
     // Obtener todos los recursos educativos
     @GetMapping

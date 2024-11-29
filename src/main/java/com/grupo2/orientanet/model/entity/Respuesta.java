@@ -24,8 +24,6 @@ public class Respuesta {
     @Column(name = "descripcion", columnDefinition = "TEXT", nullable = false)
     private String descripcion;
 
-
-
     // Relación con Pregunta
     @ManyToOne
     @JoinColumn(name = "pregunta_id", referencedColumnName = "id")
