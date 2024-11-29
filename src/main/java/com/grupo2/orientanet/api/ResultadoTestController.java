@@ -5,6 +5,7 @@ import com.grupo2.orientanet.dto.ResultadoTestDTO;
 import com.grupo2.orientanet.model.entity.Carrera;
 
 import com.grupo2.orientanet.model.entity.ResultadoTest;
+import com.grupo2.orientanet.repository.ResultadoTestRepository;
 import com.grupo2.orientanet.service.ResultadoTestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,5 +34,11 @@ public class ResultadoTestController  {
     public ResponseEntity<Carrera> obtenerCarreraMasRecomendada() {
         Carrera carreraMasRecomendada = resultadoTestService.obtenerCarreraMasRecomendada();
         return ResponseEntity.ok(carreraMasRecomendada);
+    }
+
+    @GetMapping("buscarPorUsuario/{id}")
+    public ResponseEntity<ResultadoTestDTO> obtenerResultadoTestPorUsuarioId(@PathVariable Long id) {
+        ResultadoTestDTO resultadoTest = resultadoTestService.obtenerPorUsuarioId(id);
+        return ResponseEntity.ok(resultadoTest);
     }
 }
