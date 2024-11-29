@@ -1,6 +1,7 @@
 package com.grupo2.orientanet.model.enums;
 
-public enum Role {
+public enum ERole {
     ESTUDIANTE,
-    EXPERTO
+    EXPERTO,
+    ADMIN
 }

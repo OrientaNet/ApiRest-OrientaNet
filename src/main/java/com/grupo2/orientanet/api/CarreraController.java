@@ -8,12 +8,14 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/carreras")
+
 public class CarreraController {
 
     @Autowired
@@ -21,6 +23,7 @@ public class CarreraController {
 
     // Crear una nueva carrera
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CarreraDTO> crearCarrera(@Valid @RequestBody CarreraDTO carrera) {
         CarreraDTO nuevaCarrera = carreraService.crearCarrera(carrera);
         return ResponseEntity.ok(nuevaCarrera);
@@ -42,6 +45,7 @@ public class CarreraController {
 
     // Actualizar una carrera
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<CarreraDTO> actualizarCarrera(
             @PathVariable Long id, @Valid
             @RequestBody CarreraDTO carreraDTO) throws Exception{
@@ -51,6 +55,7 @@ public class CarreraController {
 
     // Eliminar una carrera por ID
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> eliminarCarrera(@PathVariable Long id) {
         carreraService.eliminarCarrera(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

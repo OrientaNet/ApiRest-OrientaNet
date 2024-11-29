@@ -7,4 +7,7 @@ import java.util.Optional;
 
 public interface ExpertoRepository extends JpaRepository<Experto, Long> {
 
+    boolean existsByNombreAndApellido(String firstName, String lastName);
+
+    boolean existsByNombreAndApellidoAndIdNot(String firstName, String lastName, Long id);
 }

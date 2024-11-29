@@ -1,11 +1,12 @@
 package com.grupo2.orientanet.api;
 
-import com.grupo2.orientanet.dto.UsuarioRequestDTO;
-import com.grupo2.orientanet.dto.UsuarioResponseDTO;
-import com.grupo2.orientanet.model.entity.Usuario;
+import com.grupo2.orientanet.dto.AuthResponseDTO;
+import com.grupo2.orientanet.dto.LoginDTO;
+import com.grupo2.orientanet.dto.UsuarioProfileDTO;
+import com.grupo2.orientanet.dto.UsuarioRegistrationDTO;
 import com.grupo2.orientanet.service.UsuarioService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,34 +16,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    @Autowired
-    private UsuarioService usuarioService;
 
- /*   @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody UsuarioResponseDTO usuarioResponseDTO, UsuarioRequestDTO usuarioRequestDTO) {
+    private final UsuarioService usuarioService;
 
-        UsuarioResponseDTO compareUser = usuarioService.getByEmail(usuarioResponseDTO.getEmail());
 
-        UsuarioRequestDTO compareUserContrasena = usuarioService.getByEmail(usuarioRequestDTO.getContrasena());
+    // Registro Estudiantes
+    @PostMapping("/register/estudiante")
+    public ResponseEntity<UsuarioProfileDTO> registerEstudiante(@Valid @RequestBody UsuarioRegistrationDTO usuarioRegistrationDTO) {
+        UsuarioProfileDTO usuarioProfile = usuarioService.registerEstudiante(usuarioRegistrationDTO);
+        return new ResponseEntity<>(usuarioProfile, HttpStatus.CREATED);
+    }
 
-        // Si no se encuentra el usuario
-        if (compareUser == null) {
-            return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
-        }
+    // Registro Expertos
+    @PostMapping("/register/experto")
+    public ResponseEntity<UsuarioProfileDTO> register(@Valid @RequestBody UsuarioRegistrationDTO usuarioRegistrationDTO) {
+        UsuarioProfileDTO expertoProfile = usuarioService.registerExperto(usuarioRegistrationDTO);
+        return new ResponseEntity<>(expertoProfile, HttpStatus.CREATED);
+    }
 
-        // Verificar la contraseña
-        if (!compareUserContrasena.getContrasena().equals(usuario.getContrasena())) {
-            return new ResponseEntity<>("Contraseña incorrecta", HttpStatus.UNAUTHORIZED);
-        }
-
-        return new ResponseEntity<>("Login exitoso", HttpStatus.OK);
-    }*/
-
-    @PostMapping("/register")
-    public ResponseEntity<UsuarioRequestDTO> register(@Valid @RequestBody UsuarioRequestDTO usuarioRequestDTO) throws Exception {
-        UsuarioRequestDTO newUsuario = usuarioService.create(usuarioRequestDTO);
-        return new ResponseEntity<>(newUsuario, HttpStatus.OK);
+    //Login
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponseDTO> login (@Valid @RequestBody LoginDTO loginDTO){
+        AuthResponseDTO authResponse = usuarioService.login(loginDTO);
+        return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 }

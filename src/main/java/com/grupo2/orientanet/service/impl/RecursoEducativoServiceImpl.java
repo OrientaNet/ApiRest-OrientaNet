@@ -1,20 +1,16 @@
 package com.grupo2.orientanet.service.impl;
 
 import com.grupo2.orientanet.dto.RecursoEducativoDTO;
-import com.grupo2.orientanet.dto.UsuarioRequestDTO;
 import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.RecursoEducativoMapper;
 import com.grupo2.orientanet.model.entity.RecursoEducativo;
-import com.grupo2.orientanet.model.entity.Usuario;
 import com.grupo2.orientanet.repository.RecursoEducativoRepository;
 import com.grupo2.orientanet.service.RecursoEducativoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service

@@ -46,5 +46,3 @@ public class PagoController {
         return ResponseEntity.ok(nuevoPagoDTO);
     }
 }
-
-
