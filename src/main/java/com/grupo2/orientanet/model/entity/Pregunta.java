@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "preguntas")
-public class    Pregunta {
+public class Pregunta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,7 @@ public class    Pregunta {
     private List<Respuesta> respuestas;
 
     @ManyToOne
-    @JoinColumn(name = "prueba_id")
+    @JoinColumn(name = "prueba_vocacional_id")
     @JsonBackReference
     private PruebaVocacional prueba;
 

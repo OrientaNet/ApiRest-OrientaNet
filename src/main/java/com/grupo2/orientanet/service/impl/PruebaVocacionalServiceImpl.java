@@ -84,13 +84,15 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
 
 
     @Override
-    public ResultadoTest realizarPrueba(Long pruebaId,Long estudianteId, Map<Long, Long> respuestasSeleccionadas) {
+    public ResultadoTest realizarPrueba(Long pruebaId,Long usuarioId, Map<Long, Long> respuestasSeleccionadas) {
         // Buscar la prueba vocacional
         PruebaVocacional prueba = pruebaVocacionalRepository.findById(pruebaId)
                 .orElseThrow(() -> new RuntimeException("Prueba no encontrada"));
 
 
-        Usuario usuario = usuarioRepository.findById(estudianteId)
+        //guarda usuario y estudiante en memoria
+        //TODO borrar estudiante de Resultado pruebas
+        Usuario usuario = usuarioRepository.findById(usuarioId)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         Estudiante estudiante = usuario.getEstudiante();
@@ -134,6 +136,7 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
         ResultadoTest resultado = new ResultadoTest();
         resultado.setPruebaNombre(prueba.getNombre());  // Asignar la prueba vocacional
         resultado.setEstudiante(estudiante);
+        resultado.setUsuario(usuario);
         resultado.setCarrera(carreraRecomendada);
         resultado.setRecomendacion("La carrera recomendada es: " + carreraRecomendada.getNombre());
         estudiante.setResultadoTest(resultado);

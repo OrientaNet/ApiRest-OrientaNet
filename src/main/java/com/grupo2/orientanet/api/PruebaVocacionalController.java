@@ -4,6 +4,7 @@ import com.grupo2.orientanet.model.entity.PruebaVocacional;
 import com.grupo2.orientanet.model.entity.ResultadoTest;
 import com.grupo2.orientanet.service.PruebaVocacionalService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +16,10 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/pruebas")
+@RequiredArgsConstructor
 public class PruebaVocacionalController {
 
-    @Autowired
-    private PruebaVocacionalService pruebaVocacionalService;
+    private final PruebaVocacionalService pruebaVocacionalService;
 
 
     // Crear una nueva prueba vocacional
