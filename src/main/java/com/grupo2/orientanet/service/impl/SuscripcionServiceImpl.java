@@ -5,21 +5,16 @@ import com.grupo2.orientanet.dto.SuscripcionDTO;
 import com.grupo2.orientanet.exception.ResourceNotFoundException;
 import com.grupo2.orientanet.mapper.PagoMapper;
 import com.grupo2.orientanet.mapper.SuscripcionMapper;
-import com.grupo2.orientanet.model.entity.Suscripcion;
-import com.grupo2.orientanet.repository.SuscripcionRepository;
+import com.grupo2.orientanet.model.entity.*;
+import com.grupo2.orientanet.repository.*;
 import com.grupo2.orientanet.service.SuscripcionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.grupo2.orientanet.model.entity.Estudiante;
-import com.grupo2.orientanet.model.entity.Pago;
-import com.grupo2.orientanet.model.entity.Plan;
 import com.grupo2.orientanet.model.entity.Suscripcion;
 import com.grupo2.orientanet.model.enums.EstadoSuscripcion;
 import com.grupo2.orientanet.model.enums.MetodoPago;
-import com.grupo2.orientanet.repository.EstudianteRepository;
-import com.grupo2.orientanet.repository.PlanRepository;
 import com.grupo2.orientanet.repository.SuscripcionRepository;
 import com.grupo2.orientanet.service.PagoService;
 import com.grupo2.orientanet.service.SuscripcionService;
@@ -38,6 +33,7 @@ public class SuscripcionServiceImpl implements SuscripcionService {
     private final EstudianteRepository estudianteRepository;
     private final PlanRepository planRepository;
     private final PagoMapper pagoMapper;
+    private final UsuarioRepository usuarioRepository;
 
 
     @Transactional(readOnly = true)
@@ -50,9 +46,13 @@ public class SuscripcionServiceImpl implements SuscripcionService {
 
     @Transactional
     @Override
-    public SuscripcionDTO suscribirEstudianteAPlan(Long estudianteId, Long planId, Double monto, MetodoPago metodoPago) {
-        Estudiante estudiante = estudianteRepository.findById(estudianteId)
-                .orElseThrow(() -> new ResourceNotFoundException("Estudiante no encontrado"));
+    public SuscripcionDTO suscribirEstudianteAPlan(Long usuarioId, Long planId, Double monto, MetodoPago metodoPago) {
+
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+            .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
+
+        Estudiante estudiante = usuario.getEstudiante();
+
         Plan plan = planRepository.findById(planId)
                 .orElseThrow(() -> new ResourceNotFoundException("Plan no encontrado"));
 
@@ -60,11 +60,9 @@ public class SuscripcionServiceImpl implements SuscripcionService {
         nuevaSuscripcion.setEstudiante(estudiante);
         nuevaSuscripcion.setPlan(plan);
         nuevaSuscripcion.setFechaInicio(LocalDate.now());
+        //TODO corregir fecha de fin e inicio.
         nuevaSuscripcion.setFechaFin(LocalDate.now().plusDays(plan.getDuracionDias()));
         nuevaSuscripcion.setEstadoSuscripcion(EstadoSuscripcion.PENDIENTE);
-
-        nuevaSuscripcion.setEstudiante(estudiante);
-        nuevaSuscripcion.setPlan(plan);
 
         // Save the Suscripcion
         Suscripcion savedSuscripcion = suscripcionRepository.save(nuevaSuscripcion);

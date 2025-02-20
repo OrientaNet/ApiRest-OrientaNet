@@ -10,8 +10,6 @@ import java.util.Optional;
 public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
 
     // Personalizar findById si es necesario
-    @Override
-    Optional<Estudiante> findById(Long id);
 
     boolean existsByNombreAndApellido(String nombre, String apellido);
 
