@@ -1,6 +1,5 @@
 package com.grupo2.orientanet.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,18 +23,17 @@ public class PruebaVocacional {
     @Column(name = "nombre")
     private String nombre;
 
-    @OneToMany(mappedBy = "pruebaVocacional", cascade = CascadeType.ALL,  orphanRemoval = true)
+    @OneToMany(mappedBy = "prueba", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     private List<Pregunta> preguntas;
 
 
-    public void addPregunta(Pregunta pregunta) {
-        this.preguntas.add(pregunta);
-        pregunta.setPruebaVocacional(this);
-    }
-
-    public void removePregunta(Pregunta pregunta) {
-        this.preguntas.remove(pregunta);
-        pregunta.setPruebaVocacional(null);
+    public void asignarPruebaAPreguntas() {
+        if (preguntas != null) {
+            for (Pregunta pregunta : preguntas) {
+                pregunta.setPrueba(this);
+                pregunta.asignarPreguntaAOpciones();
+            }
+        }
     }
 }

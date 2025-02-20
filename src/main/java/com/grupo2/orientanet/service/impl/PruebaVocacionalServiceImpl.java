@@ -27,9 +27,26 @@ public class PruebaVocacionalServiceImpl implements PruebaVocacionalService {
     private final UsuarioRepository usuarioRepository;
 
 
-    @Override
-    public PruebaVocacional crearPrueba(PruebaVocacional pruebaVocacional) {
-        return pruebaVocacionalRepository.save(pruebaVocacional);
+    public PruebaVocacional crearPrueba(PruebaVocacional prueba) {
+        System.out.println("Creando nueva prueba: " + prueba.getNombre());
+
+        if (prueba.getPreguntas() != null) {
+            System.out.println("existen pruebas");
+            for (Pregunta pregunta : prueba.getPreguntas()) {
+                if (pregunta.getRespuestas() != null) {
+                    System.out.println("existen opciones");
+                    for (Respuesta opcion : pregunta.getRespuestas()) {
+                        System.out.println('a');
+                        Carrera carrera = carreraRepository.findById(opcion.getCarrera().getId())
+                                .orElseThrow(() -> new RuntimeException("Carrera con ID " + opcion.getCarrera().getId() + " no encontrada"));
+                        opcion.setCarrera(carrera);
+                    }
+                }
+            }
+        }
+
+        prueba.asignarPruebaAPreguntas();
+        return pruebaVocacionalRepository.save(prueba);
     }
 
 

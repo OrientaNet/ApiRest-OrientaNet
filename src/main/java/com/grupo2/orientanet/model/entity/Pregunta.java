@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "preguntas")
-public class Pregunta {
+public class    Pregunta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +24,20 @@ public class Pregunta {
     @Column(name = "pregunta_text", columnDefinition = "TEXT")
     private String descripcion;
 
-    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pregunta", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     @JsonManagedReference
     private List<Respuesta> respuestas;
 
     @ManyToOne
-    @JoinColumn(name = "prueba_vocacional_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "FK_pregunta_prueba_vocacional"))
+    @JoinColumn(name = "prueba_id")
     @JsonBackReference
-    private PruebaVocacional pruebaVocacional;
+    private PruebaVocacional prueba;
+
+    public void asignarPreguntaAOpciones() {
+        if (respuestas != null) {
+            for (Respuesta opcion : respuestas) {
+                opcion.setPregunta(this);
+            }
+        }
+    }
 }
